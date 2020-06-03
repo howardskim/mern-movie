@@ -1,38 +1,66 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display+SC&display=swap');
+/* font-family: 'Playfair Display SC', serif; */
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Slab:wght@600&family=Playfair+Display+SC&display=swap');
+/* font-family: 'Josefin Slab',
+serif;
+font-family: 'Playfair Display SC',
+serif; */
+*{
+  font-family: 'Playfair Display SC',
+  serif;
+  font-family: 'Josefin Slab', serif;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+    font-family: 'Playfair Display SC',
+    serif;
+    font-family: 'Josefin Slab',
+    serif;
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.search-container{
+  width: 300px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  left: 50%;
+  top: 0;
+  position: absolute;
+  transform: translateX(-50%);
+}
+#search-box{
+  border: 1px solid white;
+  border-radius: 10rem;
+  margin-top: 13px;
+  padding-left: 10px;
   color: white;
 }
-
-.App-link {
-  color: #61dafb;
+#search-icon{
+  /* border: 1px solid blue; */
+  position: relative;
+  right: 10%;
+  border-radius: 50%;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+nav{
+  height: 75px !important;
+}
+nav i {
+  line-height: 75px !important;
+}
+@media only screen and (max-width: 670px) {
+  .search-container{
+    width: 50%;
   }
-  to {
-    transform: rotate(360deg);
+   #search-icon {
+     right: 15% !important;
+   }
+   nav {
+     line-height: 75px !important;
+   }
+}
+@media only screen and (min-width: 601px){
+  nav i {
+    line-height: 75px !important;
+    padding-right: 10px !important;
   }
+ 
 }
