@@ -5,6 +5,7 @@ import NavbarComponent from "./components/Navbar";
 import Landing from './components/Landing';
 import Login  from './components/Login';
 import SignUp from './components/SignUp';
+import axios from 'axios';
 
 class App extends Component {
   render() {
