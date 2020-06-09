@@ -6,14 +6,13 @@ import { connect } from 'react-redux';
 
 import '../App.css';
 
-class Landing extends Component {
+class SearchLanding extends Component {
     constructor(props){
         super(props);
         this.state = {
           loading: true,
           baseURL: "https://image.tmdb.org/t/p/w500",
           currentPage: 1,
-          itemsToShow: 20,
           totalPages: 0
         };
     }
@@ -25,17 +24,11 @@ class Landing extends Component {
     //     })
     // }
     componentDidMount(){
-        // axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_MOVIE_KEY}&language=en-US&page=${this.state.currentPage}`).then((resp) => {
-        //     this.setState({
-        //         loading: false,
-        //         data: resp.data.results,
-        //         totalPages: resp.data.total_pages
-        //     })
-        // })
-        this.props.getInitialMovies(this.state.currentPage)
+        this.props.handleSearch(this.props.match.params.title)
     }
     componentDidUpdate(prevProps, prevState){
-        if(prevProps.data.loading !== this.props.data.loading){
+        console.log(prevProps.data, this.props.data);
+        if(prevProps.data.results.length !== this.props.data.results.length){
             this.setState({
                 loading: false
             })
@@ -91,4 +84,4 @@ function mapStateToProps(state){
         data: state.search
     }
 }
-export default connect(mapStateToProps, actions)(Landing);
+export default connect(mapStateToProps, actions)(SearchLanding);

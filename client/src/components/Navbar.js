@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import * as actions from '../actions';
 import { connect } from 'react-redux';
 import '../App.css';
@@ -18,10 +18,12 @@ class NavbarComponent extends Component {
     })
   }
   handleSearch = () => {
-    this.props.handleSearch(this.state.value)
+    this.props.handleSearch(this.state.value);
+    this.props.history.push(`/search/${this.state.value}`)
   }
     render() {
         return (
+          <>
           <nav className="blue-grey darken-1">
             <div className="nav-wrapper">
               <Link style={{ marginLeft: "1%" }} to="/" className="">
@@ -43,8 +45,10 @@ class NavbarComponent extends Component {
               </ul>
             </div>
           </nav>
+          <h1 className="main-header">Popular Movies 🍿</h1>
+          </>
         );
     }
 }
 
-export default connect(null, actions)(NavbarComponent)
+export default connect(null, actions)(withRouter(NavbarComponent))

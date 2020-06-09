@@ -1,11 +1,18 @@
-import { HANDLE_SEARCH } from '../actions/types';
+import { HANDLE_SEARCH, GET_INITIAL_MOVIES } from "../actions/types";
 const initialState = {
-    data: [],
-    searched: false
+    loading: true,
+    searched: false,
+    results: []
 };
 
 export default function (state = initialState, action){
     switch(action.type){
+        case GET_INITIAL_MOVIES:
+            return {
+                ...state,
+                loading: false,
+                ...action.payload
+            }
         case HANDLE_SEARCH:
             return {
                 ...state,
