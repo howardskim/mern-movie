@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-
 const { Schema } = mongoose;
 const UserSchema = new Schema({
     email: {
@@ -28,11 +27,22 @@ UserSchema.pre("save", function (next) {
     // hash the password using our new salt
     bcrypt.hash(user.password, salt, function (err, hash) {
     //   if (err) return next(err);
-
+      
       // override the cleartext password with the hashed one
       user.password = hash;
       next();
     });
   });
 });
-mongoose.model('users', UserSchema)
+//you can add custom methods like this one below using this format
+UserSchema.methods.comparePassword = function(candidatePass, callback){
+  bcrypt.compare(candidatePass, this.password, function(err, isMatch){
+    if(err){
+      return callback(err);
+    }
+    callback(null, isMatch)
+  })
+}
+// const ModelClass = mongoose.model("users", UserSchema);
+// module.exports = ModelClass
+module.exports = mongoose.model('users', UserSchema)

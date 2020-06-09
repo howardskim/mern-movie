@@ -1,5 +1,6 @@
-require('./models/User');
 const express = require('express');
+const passport = require('passport');
+require('./models/User');
 const loginRoutes = require('./routes/loginRoutes');
 const signUpRoutes = require('./routes/signUpRoutes')
 const bodyParser = require("body-parser");
@@ -15,6 +16,7 @@ app.use(bodyParser.json());
 mongoose.connect(keys.mongoURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useCreateIndex: true,
 });
 
 loginRoutes(app);
