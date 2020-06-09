@@ -20,13 +20,19 @@ class NavbarComponent extends Component {
   handleSearch = () => {
     this.props.handleSearch(this.state.value);
     this.props.history.push(`/search/${this.state.value}`)
+    this.setState({
+      value: ''
+    })
+  }
+  handleReset = () => {
+    this.props.getInitialMovies(1)
   }
     render() {
         return (
           <>
           <nav className="blue-grey darken-1">
             <div className="nav-wrapper">
-              <Link style={{ marginLeft: "1%" }} to="/" className="">
+              <Link onClick={this.handleReset} style={{ marginLeft: "1%" }} to="/" className="">
                 MERN MOVIE
               </Link>
               <div className="search-container">

@@ -1,4 +1,9 @@
-import { HANDLE_SEARCH, GET_INITIAL_MOVIES } from "../actions/types";
+import {
+  HANDLE_SEARCH,
+  GET_INITIAL_MOVIES,
+  HANDLE_NEXT_PAGE,
+  HANDLE_PREVIOUS_PAGE,
+} from "../actions/types";
 const initialState = {
     loading: true,
     searched: false,
@@ -11,12 +16,24 @@ export default function (state = initialState, action){
             return {
                 ...state,
                 loading: false,
+                searched: false,
                 ...action.payload
             }
         case HANDLE_SEARCH:
             return {
                 ...state,
+                loading: true,
                 searched: true,
+                ...action.payload
+            }
+        case HANDLE_NEXT_PAGE:
+            return {
+                ...state,
+                ...action.payload
+            }
+        case HANDLE_PREVIOUS_PAGE:
+            return {
+                ...state,
                 ...action.payload
             }
         default:

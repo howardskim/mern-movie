@@ -35,10 +35,14 @@ class Landing extends Component {
         this.props.getInitialMovies(this.state.currentPage)
     }
     componentDidUpdate(prevProps, prevState){
+        console.log('landing prevProps ', prevProps.data);
+        console.log('landing currentProps ', this.props.data)
         if(prevProps.data.loading !== this.props.data.loading){
             this.setState({
-                loading: false
-            })
+              loading: false,
+              currentPage: this.props.data.page,
+              totalPages: this.props.data.total_pages
+            });
         }
     }
     renderImages = () => {
@@ -52,7 +56,7 @@ class Landing extends Component {
     handlePrevious = () => {
         let { currentPage } = this.state;
         if(currentPage === 1) return;
-        this.getData(currentPage - 1);
+        this.props.handleNext(null, currentPage - 1);
         this.setState({
             currentPage: currentPage - 1,
         });
@@ -60,7 +64,7 @@ class Landing extends Component {
     handleNext = () => {
         let { currentPage } = this.state;
         if(currentPage > this.state.totalPages) return;
-        this.getData(currentPage + 1);
+        this.props.handleNext(null, currentPage + 1);
         this.setState({
             currentPage: currentPage + 1
         })

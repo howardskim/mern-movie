@@ -27,11 +27,12 @@ class SearchLanding extends Component {
         this.props.handleSearch(this.props.match.params.title)
     }
     componentDidUpdate(prevProps, prevState){
-        console.log(prevProps.data, this.props.data);
-        if(prevProps.data.results.length !== this.props.data.results.length){
-            this.setState({
-                loading: false
-            })
+        if (prevProps.data.searched !== this.props.data.searched) {
+          this.setState({
+            loading: false,
+            currentPage: this.props.data.page,
+            totalPages: this.props.data.total_pages,
+          });
         }
     }
     renderImages = () => {
@@ -45,20 +46,28 @@ class SearchLanding extends Component {
     handlePrevious = () => {
         let { currentPage } = this.state;
         if(currentPage === 1) return;
-        this.getData(currentPage - 1);
+        this.props.handleNext(this.props.match.params.title, currentPage - 1);
         this.setState({
             currentPage: currentPage - 1,
         });
     }
     handleNext = () => {
         let { currentPage } = this.state;
-        if(currentPage > this.state.totalPages) return;
-        this.getData(currentPage + 1);
-        this.setState({
-            currentPage: currentPage + 1
-        })
+        console.log(currentPage, this.state.totalPages)
+        if(currentPage > this.state.totalPages){
+          return
+        } else {
+          this.props.handleNext(this.props.match.params.title, currentPage + 1);
+          this.setState({
+              currentPage: currentPage + 1
+          })
+        }
     }
     render() {
+      console.log('search state ', this.state)
+      let { currentPage, totalPages} = this.state;
+      let disableNextBool = currentPage === totalPages;
+      let disablePrevBool = currentPage === 1;
         return (
           <>
             {this.state.loading ? (
@@ -68,10 +77,10 @@ class SearchLanding extends Component {
             )}
             <div className="button-container">
             <h5 style={{color: 'white'}}>Page: {this.state.currentPage} / {this.state.totalPages}</h5>
-              <a onClick={this.handlePrevious} className="btn blue-grey lighten-1">
+              <a disabled={disablePrevBool} onClick={this.handlePrevious} className="btn blue-grey lighten-1">
                 <i className="material-icons right">arrow_back</i>Previous
               </a>
-              <a onClick={this.handleNext} className="btn blue-grey lighten-1">
+              <a disabled={disableNextBool} onClick={this.handleNext} className="btn blue-grey lighten-1">
                 <i className="material-icons right">arrow_forward</i>Next
               </a>
             </div>
