@@ -1,8 +1,25 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import * as actions from '../actions';
+import { connect } from 'react-redux';
 import '../App.css';
 
-export default class NavbarComponent extends Component {
+class NavbarComponent extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      value: ''
+    }
+  }
+  handleChange = (e) =>{
+    let typed = e.target.value;
+    this.setState({
+      value: typed
+    })
+  }
+  handleSearch = () => {
+    this.props.handleSearch(this.state.value)
+  }
     render() {
         return (
           <nav className="blue-grey darken-1">
@@ -11,9 +28,9 @@ export default class NavbarComponent extends Component {
                 MERN MOVIE
               </Link>
               <div className="search-container">
-                <input id="search-box" type="text" placeholder="search title" />
-                <div id="search-icon">
-                  <i class="material-icons">search</i>
+                <input onChange={this.handleChange} value={this.state.value} id="search-box" type="text" placeholder="search title" />
+                <div onClick={this.handleSearch} id="search-icon">
+                  <i className="material-icons">search</i>
                 </div>
               </div>
               <ul id="nav-mobile" className="right">
@@ -29,3 +46,5 @@ export default class NavbarComponent extends Component {
         );
     }
 }
+
+export default connect(null, actions)(NavbarComponent)
