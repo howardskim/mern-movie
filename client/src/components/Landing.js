@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Image from './Image';
+import Spinner from './Spinner';
 import axios from 'axios';
 import * as actions from '../actions'
 import { connect } from 'react-redux';
@@ -14,7 +15,8 @@ class Landing extends Component {
           baseURL: "https://image.tmdb.org/t/p/w500",
           currentPage: 1,
           itemsToShow: 20,
-          totalPages: 0
+          totalPages: 0,
+          show: false
         };
     }
     // getData = (page) => {
@@ -35,14 +37,17 @@ class Landing extends Component {
         this.props.getInitialMovies(this.state.currentPage)
     }
     componentDidUpdate(prevProps, prevState){
-        console.log('landing prevProps ', prevProps.data);
-        console.log('landing currentProps ', this.props.data)
         if(prevProps.data.loading !== this.props.data.loading){
             this.setState({
               loading: false,
               currentPage: this.props.data.page,
               totalPages: this.props.data.total_pages
             });
+        }
+        if (prevProps.sidebar.show !== this.props.sidebar.show) {
+          this.setState({
+            show: this.props.sidebar.show,
+          });
         }
     }
     renderImages = () => {
@@ -70,10 +75,12 @@ class Landing extends Component {
         })
     }
     render() {
+      const opacity = this.state.show ? 'entire-container' : '';
         return (
           <>
+          <div className={opacity}>
             {this.state.loading ? (
-              <h1>Loading...</h1>
+              <Spinner />
             ) : (
               <div className="landing-container">{this.renderImages()}</div>
             )}
@@ -86,13 +93,16 @@ class Landing extends Component {
                 <i className="material-icons right">arrow_forward</i>Next
               </a>
             </div>
+          </div>
+
           </>
         );
     }
 }
 function mapStateToProps(state){
     return {
-        data: state.search
+        data: state.search,
+        sidebar: state.sidebar
     }
 }
 export default connect(mapStateToProps, actions)(Landing);

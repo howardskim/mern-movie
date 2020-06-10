@@ -8,7 +8,8 @@ class NavbarComponent extends Component {
   constructor(props){
     super(props);
     this.state = {
-      value: ''
+      value: '',
+      show: false
     }
   }
   handleChange = (e) =>{
@@ -27,16 +28,35 @@ class NavbarComponent extends Component {
   handleReset = () => {
     this.props.getInitialMovies(1)
   }
+  handleSubmit = (e) => {
+    if(!this.state.value) return;
+    if(e.which === 13){
+      this.handleSearch();
+    }
+  }
+  componentDidUpdate(prevProps, prevState){
+    console.log(prevProps, this.props)
+    if(prevProps.sidebar.show !== this.props.sidebar.show){
+      this.setState({
+        show: this.props.sidebar.show
+      })
+    }
+  }
     render() {
+      //if sidebar is open, add the class entore-container
+      const opacity = this.state.show ? 'main-header entire-container' : 'main-header'
+      console.log('this.state.show ', this.state.show)
         return (
           <>
-          <nav className="blue-grey darken-1">
+          <nav className="blue-grey darken-1 grey darken-4">
             <div className="nav-wrapper">
               <Link onClick={this.handleReset} style={{ marginLeft: "1%" }} to="/" className="">
                 MERN MOVIE
               </Link>
               <div className="search-container">
-                <input onChange={this.handleChange} value={this.state.value} id="search-box" type="text" placeholder="search title" />
+              <form>
+                <input onChange={this.handleChange} onKeyPress={this.handleSubmit} value={this.state.value} id="search-box" type="text" placeholder="Search Title" />
+              </form>
                 <div onClick={this.handleSearch} id="search-icon">
                   <i className="material-icons">search</i>
                 </div>
@@ -51,10 +71,15 @@ class NavbarComponent extends Component {
               </ul>
             </div>
           </nav>
-          <h1 className="main-header">Popular Movies 🍿</h1>
+          <h1 className={opacity}>Popular Movies 🍿</h1>
           </>
         );
     }
 }
-
-export default connect(null, actions)(withRouter(NavbarComponent))
+function mapStateToProps(state){
+  return {
+    sidebar: state.sidebar,
+    // image: state.image
+  }
+}
+export default connect(mapStateToProps, actions)(withRouter(NavbarComponent))

@@ -7,13 +7,14 @@ import Login  from './components/Login';
 import SignUp from './components/SignUp';
 import SearchLanding from './components/SearchLanding';
 import axios from 'axios';
-
+import SlideOut from './components/SlideOut';
 class App extends Component {
   render() {
     return (
       <>
       <BrowserRouter>
         <NavbarComponent />
+        <SlideOut />
         <Route exact path="/" component={Landing} />
         <Route path="/search/:title" component={SearchLanding} />
         <Route path="/login" component={Login} />

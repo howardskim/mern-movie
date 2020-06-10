@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Image from './Image';
+import Spinner from './Spinner';
 import axios from 'axios';
 import * as actions from '../actions'
 import { connect } from 'react-redux';
@@ -71,7 +72,7 @@ class SearchLanding extends Component {
         return (
           <>
             {this.state.loading ? (
-              <h1>Loading...</h1>
+              <Spinner />
             ) : (
               <div className="landing-container">{this.renderImages()}</div>
             )}

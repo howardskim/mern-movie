@@ -1,4 +1,10 @@
-import { HANDLE_SEARCH, GET_INITIAL_MOVIES, HANDLE_NEXT_PAGE } from "./types";
+import {
+  HANDLE_SEARCH,
+  GET_INITIAL_MOVIES,
+  HANDLE_NEXT_PAGE,
+  HANDLE_IMAGE_CLICK,
+  HANDLE_SIDEBAR,
+} from "./types";
 import axios from 'axios';
 
 export const getInitialMovies = (pageNum) => async (dispatch) => {
@@ -43,4 +49,24 @@ export const handleNext = (searched, nextPageNum) => async (dispatch) => {
 
 export const handlePrevious = (searched, previousPageNum) => async (dispatch) => {
 
+};
+
+// export const handleImageClick = (info) => (dispatch) => {
+//   dispatch({
+//     type: HANDLE_IMAGE_CLICK,
+//     payload: info
+//   })
+// }
+
+export const handleImageClick = (info) => {
+  return {
+    type: HANDLE_IMAGE_CLICK,
+    payload: info,
+  };
+};
+
+export const handleSidebar = () => {
+  return {
+    type: HANDLE_SIDEBAR,
+  };
 };
