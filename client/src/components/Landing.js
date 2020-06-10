@@ -19,21 +19,7 @@ class Landing extends Component {
           show: false
         };
     }
-    // getData = (page) => {
-    //     axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_MOVIE_KEY}&language=en-US&page=${page}`).then((resp) => {
-    //         this.setState({
-    //             data: resp.data.results,
-    //         })
-    //     })
-    // }
     componentDidMount(){
-        // axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_MOVIE_KEY}&language=en-US&page=${this.state.currentPage}`).then((resp) => {
-        //     this.setState({
-        //         loading: false,
-        //         data: resp.data.results,
-        //         totalPages: resp.data.total_pages
-        //     })
-        // })
         this.props.getInitialMovies(this.state.currentPage)
     }
     componentWillUnmount(){
