@@ -3,6 +3,7 @@ import {
   GET_INITIAL_MOVIES,
   HANDLE_NEXT_PAGE,
   HANDLE_PREVIOUS_PAGE,
+  HANDLE_RESET,
 } from "../actions/types";
 const initialState = {
     loading: true,
@@ -36,6 +37,8 @@ export default function (state = initialState, action){
                 ...state,
                 ...action.payload
             }
+        case HANDLE_RESET:
+            return initialState;
         default:
             return state
     }

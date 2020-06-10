@@ -5,3 +5,4 @@ export const HANDLE_PREVIOUS_PAGE = "handle_previous_page";
 export const HANDLE_IMAGE_CLICK = 'handle_image_click';
 export const HANDLE_SIDEBAR = 'handle_sidebar';
 
+export const HANDLE_RESET = "handle_reset";

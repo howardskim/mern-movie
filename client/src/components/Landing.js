@@ -36,7 +36,11 @@ class Landing extends Component {
         // })
         this.props.getInitialMovies(this.state.currentPage)
     }
+    componentWillUnmount(){
+      this.props.handleReset();
+    }
     componentDidUpdate(prevProps, prevState){
+      console.log(prevProps, this.props);
         if(prevProps.data.loading !== this.props.data.loading){
             this.setState({
               loading: false,

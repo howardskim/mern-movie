@@ -28,6 +28,7 @@ class NavbarComponent extends Component {
   handleReset = () => {
     this.props.getInitialMovies(1)
   }
+
   handleSubmit = (e) => {
     if(!this.state.value) return;
     if(e.which === 13){
@@ -35,7 +36,6 @@ class NavbarComponent extends Component {
     }
   }
   componentDidUpdate(prevProps, prevState){
-    console.log(prevProps, this.props)
     if(prevProps.sidebar.show !== this.props.sidebar.show){
       this.setState({
         show: this.props.sidebar.show
@@ -45,7 +45,6 @@ class NavbarComponent extends Component {
     render() {
       //if sidebar is open, add the class entore-container
       const opacity = this.state.show ? 'main-header entire-container' : 'main-header'
-      console.log('this.state.show ', this.state.show)
         return (
           <>
           <nav className="blue-grey darken-1 grey darken-4">

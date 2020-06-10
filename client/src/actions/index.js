@@ -4,8 +4,15 @@ import {
   HANDLE_NEXT_PAGE,
   HANDLE_IMAGE_CLICK,
   HANDLE_SIDEBAR,
+  HANDLE_RESET,
 } from "./types";
 import axios from 'axios';
+
+export const handleReset = () => {
+  return {
+    type: HANDLE_RESET,
+  };
+}
 
 export const getInitialMovies = (pageNum) => async (dispatch) => {
     const response = await axios.get(
