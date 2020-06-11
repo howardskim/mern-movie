@@ -19,6 +19,7 @@ class NavbarComponent extends Component {
     })
   }
   handleSearch = () => {
+    if(!this.state.value) return;
     this.props.handleSearch(this.state.value);
     this.props.history.push(`/search/${this.state.value}`)
     this.setState({
@@ -43,7 +44,7 @@ class NavbarComponent extends Component {
     }
   }
     render() {
-      //if sidebar is open, add the class entore-container
+      //if sidebar is open, add the class entire-container
       const opacity = this.state.show ? 'main-header entire-container' : 'main-header'
         return (
           <>
@@ -61,11 +62,19 @@ class NavbarComponent extends Component {
                 </div>
               </div>
               <ul id="nav-mobile" className="right">
+                {this.props.auth ? (
+                <li>
+                  <Link to="/favorites">My Bookmarks</Link>
+                </li>
+                ) : ''}
                 <li>
                   <Link to="/signup">Sign Up</Link>
                 </li>
                 <li>
-                  <Link to="/login">Login</Link>
+                  <Link to="/login">Log In</Link>
+                </li>
+                <li>
+                  <Link to="/logout">Log Out</Link>
                 </li>
               </ul>
             </div>
@@ -78,7 +87,8 @@ class NavbarComponent extends Component {
 function mapStateToProps(state){
   return {
     sidebar: state.sidebar,
-    // image: state.image
+    auth: state.auth.authenticated
+
   }
 }
 export default connect(mapStateToProps, actions)(withRouter(NavbarComponent))

@@ -7,6 +7,7 @@ import {
   HANDLE_RESET,
   AUTH_USER,
   AUTH_ERROR,
+  SIGN_OUT
 } from "./types";
 import axios from 'axios';
 
@@ -80,7 +81,7 @@ export const handleSidebar = () => {
   };
 };
 
-export const signup = ({email, password}) => async (dispatch) => {
+export const signup = ({email, password}, callback) => async (dispatch) => {
   
   try {
     const response = await axios.post('http://localhost:5000/signup', {
@@ -90,7 +91,9 @@ export const signup = ({email, password}) => async (dispatch) => {
     dispatch({
       type: AUTH_USER,
       payload: response.data.token
-    })
+    });
+    localStorage.setItem('token', response.data.token)
+    callback();
   } catch (error) {
     dispatch({
       type: AUTH_ERROR,
@@ -98,3 +101,30 @@ export const signup = ({email, password}) => async (dispatch) => {
     })
   }
 }
+
+export const signout = () => {
+  localStorage.removeItem('token');
+  return {
+    type: AUTH_USER,
+    payload: ''
+  }
+}
+export const signin = ({ email, password }, callback) => async (dispatch) => {
+  try {
+    const response = await axios.post("http://localhost:5000/signin", {
+      email,
+      password,
+    });
+    dispatch({
+      type: AUTH_USER,
+      payload: response.data.token,
+    });
+    localStorage.setItem("token", response.data.token);
+    callback();
+  } catch (error) {
+    dispatch({
+      type: AUTH_ERROR,
+      payload: "Invalid Login Credentials",
+    });
+  }
+};

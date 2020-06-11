@@ -6,6 +6,8 @@ import Landing from './components/Landing';
 import Login  from './components/Login';
 import SignUp from './components/SignUp';
 import SearchLanding from './components/SearchLanding';
+import Favorites from './components/Favorites';
+import LogOut from './components/LogOut';
 import axios from 'axios';
 import SlideOut from './components/SlideOut';
 class App extends Component {
@@ -19,6 +21,8 @@ class App extends Component {
         <Route path="/search/:title" component={SearchLanding} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={SignUp} />
+        <Route path="/favorites" component={Favorites} />
+        <Route path="/logout" component={LogOut} />
       </BrowserRouter>
       </>
     );
