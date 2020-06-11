@@ -72,19 +72,20 @@ class Landing extends Component {
             {this.state.loading ? (
               <Spinner />
             ) : (
+              <>
               <div className="landing-container">{this.renderImages()}</div>
+              <div className="button-container">
+              <h5 style={{color: 'white'}}>Page: {this.state.currentPage} / {this.state.totalPages}</h5>
+                <a onClick={this.handlePrevious} className="btn blue-grey lighten-1">
+                  <i className="material-icons right">arrow_back</i>Previous
+                </a>
+                <a onClick={this.handleNext} className="btn blue-grey lighten-1">
+                  <i className="material-icons right">arrow_forward</i>Next
+                </a>
+              </div>
+            </>
             )}
-            <div className="button-container">
-            <h5 style={{color: 'white'}}>Page: {this.state.currentPage} / {this.state.totalPages}</h5>
-              <a onClick={this.handlePrevious} className="btn blue-grey lighten-1">
-                <i className="material-icons right">arrow_back</i>Previous
-              </a>
-              <a onClick={this.handleNext} className="btn blue-grey lighten-1">
-                <i className="material-icons right">arrow_forward</i>Next
-              </a>
-            </div>
           </div>
-
           </>
         );
     }
