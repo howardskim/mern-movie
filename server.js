@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const passport = require('passport');
 require('./models/User');
 const loginRoutes = require('./routes/loginRoutes');
@@ -13,6 +14,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
 app.use(bodyParser.json());
+app.use(cors());
 mongoose.connect(keys.mongoURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,

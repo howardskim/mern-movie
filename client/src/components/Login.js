@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
-
-export default class Login extends Component {
+import { connect } from 'react-redux'
+import * as actions from '../actions';
+class Login extends Component {
+    componentDidMount(){
+        this.props.handleSidebar();
+    }
     render() {
         return (
             <div>
@@ -9,3 +13,5 @@ export default class Login extends Component {
         )
     }
 }
+
+export default connect(null, actions)(Login)

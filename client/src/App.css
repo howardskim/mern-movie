@@ -138,6 +138,7 @@ nav i {
 .slide-container{
   width: 100%;
   width: 500px;
+  width: 20%;
   background: rgb(75, 73, 73);
   background: black;
   color: white;
@@ -175,4 +176,14 @@ nav i {
 .detail-container{
   width: 80%;
   margin: 0 auto;
+}
+
+
+/* SignUp */
+.sign-up-form{
+  width: 20%;
+  margin: 0 auto;
+}
+.sign-up-form input, .sign-up-form label{
+  color: white;
 }

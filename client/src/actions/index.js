@@ -5,6 +5,8 @@ import {
   HANDLE_IMAGE_CLICK,
   HANDLE_SIDEBAR,
   HANDLE_RESET,
+  AUTH_USER,
+  AUTH_ERROR,
 } from "./types";
 import axios from 'axios';
 
@@ -77,3 +79,22 @@ export const handleSidebar = () => {
     type: HANDLE_SIDEBAR,
   };
 };
+
+export const signup = ({email, password}) => async (dispatch) => {
+  
+  try {
+    const response = await axios.post('http://localhost:5000/signup', {
+      email,
+      password
+    });
+    dispatch({
+      type: AUTH_USER,
+      payload: response.data.token
+    })
+  } catch (error) {
+    dispatch({
+      type: AUTH_ERROR,
+      payload: 'Email in Use'
+    })
+  }
+}
