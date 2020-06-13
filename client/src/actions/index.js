@@ -7,7 +7,8 @@ import {
   HANDLE_RESET,
   AUTH_USER,
   AUTH_ERROR,
-  SIGN_OUT
+  SIGN_OUT,
+  SEARCH_ERROR,
 } from "./types";
 import axios from 'axios';
 
@@ -28,6 +29,7 @@ export const getInitialMovies = (pageNum) => async (dispatch) => {
 }
 
 export const handleSearch = (searched) => async (dispatch) => {
+  try {
     const response = await axios.get(
       `https://api.themoviedb.org/3/search/movie?api_key=${process.env.REACT_APP_MOVIE_KEY}&language=en-US&query=${searched}&page=1&include_adult=false`
     );
@@ -35,6 +37,12 @@ export const handleSearch = (searched) => async (dispatch) => {
         type: HANDLE_SEARCH,
         payload: response.data
     })
+  } catch (error) {
+      dispatch({
+        type: SEARCH_ERROR,
+        payload: 'Search Error'
+      });
+  }
 }
 
 export const handleNext = (searched, nextPageNum) => async (dispatch) => {
@@ -61,12 +69,6 @@ export const handlePrevious = (searched, previousPageNum) => async (dispatch) =>
 
 };
 
-// export const handleImageClick = (info) => (dispatch) => {
-//   dispatch({
-//     type: HANDLE_IMAGE_CLICK,
-//     payload: info
-//   })
-// }
 
 export const handleImageClick = (info) => {
   return {

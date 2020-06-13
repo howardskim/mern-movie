@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import M from "materialize-css";
+import { Link, withRouter } from "react-router-dom";
+import {Navbar, Nav, NavDropdown, Form, FormControl, Button} from "react-bootstrap";
 import * as actions from '../actions';
 import { connect } from 'react-redux';
 import '../App.css';
@@ -11,6 +13,9 @@ class NavbarComponent extends Component {
       value: '',
       show: false
     }
+  }
+  componentDidMount(){
+
   }
   handleChange = (e) =>{
     let typed = e.target.value;
@@ -48,7 +53,7 @@ class NavbarComponent extends Component {
       const opacity = this.state.show ? 'main-header entire-container' : 'main-header'
         return (
           <>
-          <nav className="blue-grey darken-1 grey darken-4">
+            {/* <nav className="blue-grey darken-1 grey darken-4">
             <div className="nav-wrapper">
               <Link onClick={this.handleReset} style={{ marginLeft: "1%" }} to="/" className="">
                 MERN MOVIE
@@ -78,8 +83,64 @@ class NavbarComponent extends Component {
                 </li>
               </ul>
             </div>
-          </nav>
-          <h1 className={opacity}>Popular Movies 🍿</h1>
+          </nav> */}
+            <Navbar bg="dark" expand="lg">
+              <Navbar.Brand href="#home">
+                <Link
+                  onClick={this.handleReset}
+                  style={{ marginLeft: "1%" }}
+                  to="/"
+                  className=""
+                >
+                  MERN MOVIE
+                </Link>
+              </Navbar.Brand>
+              <Navbar.Toggle aria-controls="basic-navbar-nav" />
+              <Navbar.Collapse id="basic-navbar-nav">
+                <Nav className="mr-auto">
+                  {this.props.auth ? (
+                    <Nav.Link href="#home">
+                      <Link to="/favorites">My Bookmarks</Link>
+                    </Nav.Link>
+                  ) : (
+                    ""
+                  )}
+                  {this.props.auth ? '' : (
+                    <Nav.Link href="#home">
+                      <Link to="/signup">Sign Up</Link>
+                    </Nav.Link>
+                  )}
+                  {this.props.auth ? (
+                    ""
+                  ) : (
+                    <Nav.Link href="#home">
+                      <Link to="/login">Log In</Link>
+                    </Nav.Link>
+                  )}
+                  {this.props.auth ? (
+                    <Nav.Link href="#home">
+                      <Link to="/logout">Log Out</Link>
+                    </Nav.Link>
+                  ) : (
+                    ""
+                  )}
+                <Form inline>
+                  <FormControl
+                    onChange={this.handleChange}
+                    onKeyPress={this.handleSubmit}
+                    value={this.state.value}
+                    type="text"
+                    placeholder="Search"
+                    className="mr-sm-2"
+                  />
+                  <Button onClick={this.handleSearch} variant="outline-success">
+                    Search
+                  </Button>
+                </Form>
+                </Nav>
+              </Navbar.Collapse>
+            </Navbar>
+            <h1 className={opacity}>Popular Movies 🍿</h1>
           </>
         );
     }

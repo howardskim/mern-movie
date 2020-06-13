@@ -25,7 +25,7 @@ class SlideOut extends Component {
             <div className={visible}>
                 <div className="close-button-container">
                     <button onClick={this.handleToggle} className="btn blue-grey lighten-5">
-                          <i style={{color: 'black'}} className="material-icons">close</i>
+                          <i style={{color: 'white', border: '1px solid white'}} className="material-icons">close</i>
                     </button>
                     {/* <h1>SLIDE OUT COMPONENT</h1> */}
                 </div>

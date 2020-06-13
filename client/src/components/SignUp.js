@@ -18,7 +18,7 @@ class SignUp extends Component {
         return (
           <form onSubmit={handleSubmit(this.onSubmit)} className="sign-up-form">
             <fieldset>
-              <label>Email</label>
+              <label>Email: </label>
               <Field 
                 name="email"
                 type="text"
@@ -27,7 +27,7 @@ class SignUp extends Component {
               />
             </fieldset>
             <fieldset>
-              <label>Password</label>
+              <label>Password: </label>
               <Field 
                 name="password"
                 type="password"
@@ -38,7 +38,7 @@ class SignUp extends Component {
             <div className="white">
                 {this.props.errorMessage}
             </div>
-            <button className="btn" type="submit">Sign Up</button>
+            <button className="btn btn-primary" type="submit">Sign Up</button>
           </form>
         );
     }

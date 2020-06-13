@@ -54,7 +54,6 @@ class SearchLanding extends Component {
     }
     handleNext = () => {
         let { currentPage } = this.state;
-        console.log(currentPage, this.state.totalPages)
         if(currentPage > this.state.totalPages){
           return
         } else {
@@ -66,16 +65,17 @@ class SearchLanding extends Component {
     }
     render() {
       console.log('search state ', this.state)
+      console.log('search props ', this.props);
       let { currentPage, totalPages} = this.state;
       let disableNextBool = currentPage === totalPages;
       let disablePrevBool = currentPage === 1;
         return (
           <>
-            {this.state.loading ? (
+            {this.state.loading && this.props.data.results.length ? (
               <Spinner />
             ) : (
               <>
-              <div className="landing-container">{this.renderImages()}</div>
+              {!this.props.data.results.length && !this.state.loading ? <h1 className="white">Sorry, no results were found... for {this.props.match.params.title}</h1> : <> <div className="landing-container">{this.renderImages()}</div>
               <div className="button-container">
               <h5 style={{color: 'white'}}>Page: {this.state.currentPage} / {this.state.totalPages}</h5>
                 <a disabled={disablePrevBool} onClick={this.handlePrevious} className="btn blue-grey lighten-1">
@@ -85,6 +85,8 @@ class SearchLanding extends Component {
                   <i className="material-icons right">arrow_forward</i>Next
                 </a>
               </div>
+              </>
+              }
               </>
             )}
           </>

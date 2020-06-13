@@ -10,6 +10,20 @@ serif; */
   serif;
   font-family: 'Josefin Slab', serif;
 }
+.nav-link{
+  color: white !important;
+}
+.navbar-collapse{
+  background: #343a40 !important;
+  z-index: 1000000000
+}
+input{
+  color: black !important;
+}
+a, .white{
+  color: white !important;
+  
+}
 html {
   /* background: linear-gradient(to bottom, rgb(1, 10, 14), #a70404); */
   /* background: black; */
@@ -18,9 +32,10 @@ html {
 body{
   height: 100%;
   /* background: rgba(184, 111, 111, 0.062); */
-  background: linear-gradient(to bottom, rgb(7, 7, 7), #5e0202);
   background: #ddd;
-  background: black;
+  background: linear-gradient(to bottom, rgb(7, 7, 7), #5e0202);
+  /* background: black; */
+  /* background: white; */
 }
 .entire-container{
   opacity: 0.5;
@@ -55,10 +70,10 @@ body{
   border-radius: 50%;
 }
 nav{
-  height: 75px !important;
+  /* height: 75px !important;  */
 }
 nav i {
-  line-height: 75px !important;
+  /* line-height: 75px !important; */
 }
 
 @media only screen and (max-width: 670px) {
@@ -154,7 +169,7 @@ nav i {
   overflow: scroll;
   /* transform: translate3d(100vw, 0, 0); */
   /* transform: translate3d(0vw, 0, 0); */
-  z-index: 5000
+  z-index: 90000000000000000000
 }
 .slide-container.hideThis {
   transform: translate3d(30vw, 0, 0);
