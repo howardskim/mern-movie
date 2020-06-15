@@ -64,8 +64,6 @@ class SearchLanding extends Component {
         }
     }
     render() {
-      console.log('search state ', this.state)
-      console.log('search props ', this.props);
       let { currentPage, totalPages} = this.state;
       let disableNextBool = currentPage === totalPages;
       let disablePrevBool = currentPage === 1;

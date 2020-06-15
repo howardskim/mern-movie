@@ -11,7 +11,8 @@ class SignUp extends Component {
         })
     }
     componentDidMount(){
-        this.props.handleSidebar();
+      //handles sidebar closing
+        this.props.handleReset();
     }
     render() {
         const { handleSubmit } = this.props;

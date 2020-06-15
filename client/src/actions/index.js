@@ -18,6 +18,12 @@ export const handleReset = () => {
   };
 }
 
+export const closeSidebar = () => {
+  return {
+    type: HANDLE_SIDEBAR,
+  };
+};
+
 export const getInitialMovies = (pageNum) => async (dispatch) => {
     const response = await axios.get(
       `https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_MOVIE_KEY}&language=en-US&page=${pageNum}`
@@ -77,11 +83,6 @@ export const handleImageClick = (info) => {
   };
 };
 
-export const handleSidebar = () => {
-  return {
-    type: HANDLE_SIDEBAR,
-  };
-};
 
 export const signup = ({email, password}, callback) => async (dispatch) => {
   
