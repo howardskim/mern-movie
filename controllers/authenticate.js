@@ -18,9 +18,20 @@ function createToken(user){
 exports.signin = (req, res, next) => {
     //user already had their email and password authenticated
     //just need to give them a token
-    res.send({token: createToken(req.user)})
+    res.send({
+        token: createToken(req.user),
+        favorites: req.user.favorites
+    });
+    // User.findById
 }
 
+exports.addMovie = (req, res, next) => {
+    console.log('req.user ', req.user);
+    res.send('hi');
+    // User.findById({
+
+    // })
+}
 
 exports.signup =  (req, res, next) => {
     //see if user with given email exists, 

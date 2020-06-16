@@ -79,7 +79,7 @@ class Landing extends Component {
                   <i className="material-icons right">arrow_back</i>Previous
                 </a>
                 <a onClick={this.handleNext} className="btn blue-grey lighten-1">
-                  <i className="material-icons right">arrow_forward</i>Next
+                  Next<i className="material-icons right">arrow_forward</i>
                 </a>
               </div>
             </>

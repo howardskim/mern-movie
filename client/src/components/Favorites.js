@@ -6,6 +6,7 @@ import * as actions from '../actions';
 class Favorites extends Component {
     componentDidMount(){
         this.props.handleReset();
+        console.log('123 ', this.props)
     }
     render() {
         return (
@@ -15,5 +16,10 @@ class Favorites extends Component {
         )
     }
 }
+function mapStateToProps(state){
+    return {
+        userInfo: state.auth
+    }
+}
 
-export default connect(null, actions)(requireAuth(Favorites));
+export default connect(mapStateToProps, actions)(requireAuth(Favorites));

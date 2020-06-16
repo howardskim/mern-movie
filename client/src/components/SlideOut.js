@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import { Card, ListGroup, ListGroupItem, Button } from 'react-bootstrap';
+import axios from 'axios';
 class SlideOut extends Component {
     constructor(props){
         super(props);
@@ -14,13 +15,11 @@ class SlideOut extends Component {
         this.props.closeSidebar()
     }
     componentDidMount(){
-        console.log(this.props)
+
     }
     componentDidUpdate(prevProps, prevState){
-        console.log(prevProps.sidebar, this.props.sidebar)
         if(prevProps.sidebar.show !== this.props.sidebar.show){
             let { title, original_title, overview } = this.props.sidebar.info;
-            console.log('title ', title)
             this.setState({
                 show: this.props.sidebar.show,
                 title,
@@ -29,7 +28,15 @@ class SlideOut extends Component {
             })
         }
     }
+    handleClick = () => {
+      let toAdd = {
+        ...this.props.sidebar.info,
+        email: localStorage.getItem('email')
+      }
+      this.props.addMovie(toAdd);
+    }
     render() {
+      console.log('slide out props ', this.props)
         let visible = this.state.show ? 'slide-container showThis' : 'slide-container hideThis'
         return (
           <div className={visible}>
@@ -63,7 +70,7 @@ class SlideOut extends Component {
                 <Card.Body>
                   <Card.Link href="#">Card Link</Card.Link>
                   <Card.Link href="#">Another Link</Card.Link>
-                  <Button>Save to Favorites</Button>
+                  <Button onClick={this.handleClick}>Save to Favorites</Button>
                 </Card.Body>
               </Card>
             </div>
@@ -74,6 +81,7 @@ class SlideOut extends Component {
 function mapStateToProps(state){
     return {
         sidebar: state.sidebar,
+        userInfo: state.auth
     }
 }
 export default connect(mapStateToProps, actions)(SlideOut);

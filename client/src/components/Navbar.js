@@ -140,7 +140,7 @@ class NavbarComponent extends Component {
                 </Nav>
               </Navbar.Collapse>
             </Navbar>
-            <h1 className={opacity}>Popular Movies 🍿</h1>
+            {/* <h1 className={opacity}>Popular Movies 🍿</h1> */}
           </>
         );
     }

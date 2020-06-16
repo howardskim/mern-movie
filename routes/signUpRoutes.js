@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const AuthenticationController = require('../controllers/authenticate');
 const passportService = require("../services/passport");
 const passport = require("passport");
-
+const requireLogin = require('../middlewares/requireLogin');
 //Intercepter/MiddleWare
 
 const requireAuth = passport.authenticate("jwt", {
@@ -18,4 +18,5 @@ module.exports = (app) => {
     })
     app.post('/signup', AuthenticationController.signup);
     app.post('/signin', requireSign, AuthenticationController.signin)
+    app.post("/addMovie",  AuthenticationController.addMovie);
 }

@@ -118,11 +118,15 @@ export const signin = ({ email, password }, callback) => async (dispatch) => {
       email,
       password,
     });
+    console.log(response)
     dispatch({
       type: AUTH_USER,
       payload: response.data.token,
+      favorites: response.data.favorites,
+      email
     });
     localStorage.setItem("token", response.data.token);
+    localStorage.setItem("email", email)
     callback();
   } catch (error) {
     dispatch({
@@ -131,3 +135,12 @@ export const signin = ({ email, password }, callback) => async (dispatch) => {
     });
   }
 };
+
+export const addMovie = (newMovie) => async (dispatch) => {
+  try {
+    const response = await axios.post("http://localhost:5000/addMovie", newMovie)
+    console.log('newMovie ', newMovie)
+  } catch (error) {
+    console.log(error);
+  }
+}

@@ -8,10 +8,13 @@ const UserSchema = new Schema({
         unique: true,
         lowercase: true,
         trim: true,
-        required: 'Please supply an email'
+        required: 'Please supply an email',
     },
     password:{
         type: String
+    },
+    favorites: {
+      type: Array
     }
 });
 
