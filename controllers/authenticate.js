@@ -1,6 +1,7 @@
 //logic to process a request and to ultimately respond to it
 const mongoose = require('mongoose');
 const User = mongoose.model('users');
+const Favorite = mongoose.model('favorites')
 const jwt = require('jwt-simple');
 const keys = require('../config/keys');
 
@@ -20,17 +21,48 @@ exports.signin = (req, res, next) => {
     //just need to give them a token
     res.send({
         token: createToken(req.user),
-        favorites: req.user.favorites
+        favorites: req.user.favorites,
+        id: req.user._id
     });
-    // User.findById
+}
+
+exports.getFavorites = (req, res, next) => {
+    const { id } = req.query;
+    User.findById(id).select('favorites').exec((err, data) => {
+        if(err){
+            return res.status(400).json({err})
+        } else {
+            res.status(200).send(data.favorites)
+        }
+    })
 }
 
 exports.addMovie = (req, res, next) => {
-    console.log('req.user ', req.user);
-    res.send('hi');
-    // User.findById({
+    const { userID } = req.body;
+    const addedMovie = req.body;
+    const addedFavorite = new Favorite({
+        ...addedMovie
+    });
+    addedFavorite.save((err) => {
+        if(err) {
+            res.status(400).json({
+                error: 'This is already in your favorites!'
+            })
+        } else {
+            User.update(
+              { _id: userID },
+              { $addToSet: { favorites: addedFavorite } },
+              function (err, doc) {
+                if (err) {
+                  return res.json({ err });
+                } else {
+                  return res.status(200).json({ data: addedFavorite });
+                }
+              }
+            );
+        }
+    })
 
-    // })
 }
 
 exports.signup =  (req, res, next) => {
@@ -60,12 +92,11 @@ exports.signup =  (req, res, next) => {
                 return next(err)
             }
             // res.status(200).json({success: true})
-            res.status(200).json({ token: createToken(newUser) });
+            res
+              .status(200)
+              .json({ token: createToken(newUser), id: newUser._id });
 
         })
 
     })
-    // res.send({
-    //     success: true
-    // })
 }

@@ -11,6 +11,6 @@ const requireSign = passport.authenticate("local", {
 });
 
 module.exports = (app) => {
-    app.post('/login', AuthenticationController.signup)
+    // app.post('/login', AuthenticationController.signup)
     
 }

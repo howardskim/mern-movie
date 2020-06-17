@@ -18,5 +18,6 @@ module.exports = (app) => {
     })
     app.post('/signup', AuthenticationController.signup);
     app.post('/signin', requireSign, AuthenticationController.signin)
-    app.post("/addMovie",  AuthenticationController.addMovie);
+    app.post("/api/addMovie",  AuthenticationController.addMovie);
+    app.get("/api/getFavorites/:id", AuthenticationController.getFavorites)
 }

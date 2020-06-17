@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const passport = require('passport');
 require('./models/User');
+require('./models/Favorites')
 const loginRoutes = require('./routes/loginRoutes');
 const signUpRoutes = require('./routes/signUpRoutes')
 const bodyParser = require("body-parser");

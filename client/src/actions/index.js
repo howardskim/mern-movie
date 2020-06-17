@@ -9,6 +9,7 @@ import {
   AUTH_ERROR,
   SIGN_OUT,
   SEARCH_ERROR,
+  GET_FAVES
 } from "./types";
 import axios from 'axios';
 
@@ -85,7 +86,6 @@ export const handleImageClick = (info) => {
 
 
 export const signup = ({email, password}, callback) => async (dispatch) => {
-  
   try {
     const response = await axios.post('http://localhost:5000/signup', {
       email,
@@ -95,7 +95,8 @@ export const signup = ({email, password}, callback) => async (dispatch) => {
       type: AUTH_USER,
       payload: response.data.token
     });
-    localStorage.setItem('token', response.data.token)
+    localStorage.setItem('token', response.data.token);
+    localStorage.setItem('id', response.data.id);
     callback();
   } catch (error) {
     dispatch({
@@ -107,6 +108,7 @@ export const signup = ({email, password}, callback) => async (dispatch) => {
 
 export const signout = () => {
   localStorage.removeItem('token');
+  localStorage.removeItem("id");
   return {
     type: AUTH_USER,
     payload: ''
@@ -123,10 +125,10 @@ export const signin = ({ email, password }, callback) => async (dispatch) => {
       type: AUTH_USER,
       payload: response.data.token,
       favorites: response.data.favorites,
-      email
+      
     });
     localStorage.setItem("token", response.data.token);
-    localStorage.setItem("email", email)
+    localStorage.setItem("id", response.data.id)
     callback();
   } catch (error) {
     dispatch({
@@ -138,9 +140,20 @@ export const signin = ({ email, password }, callback) => async (dispatch) => {
 
 export const addMovie = (newMovie) => async (dispatch) => {
   try {
-    const response = await axios.post("http://localhost:5000/addMovie", newMovie)
-    console.log('newMovie ', newMovie)
+    const response = await axios.post("http://localhost:5000/api/addMovie", newMovie)
   } catch (error) {
     console.log(error);
+  }
+}
+
+export const getFavorites = (id) => async (dispatch) => {
+  try {
+    const response = await axios.get(`http://localhost:5000/api/getFavorites/id?id=${id}`,);
+    dispatch({
+      type: GET_FAVES,
+      payload: response.data
+    })
+  } catch (error) {
+    
   }
 }

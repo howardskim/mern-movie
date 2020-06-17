@@ -31,12 +31,11 @@ class SlideOut extends Component {
     handleClick = () => {
       let toAdd = {
         ...this.props.sidebar.info,
-        email: localStorage.getItem('email')
+        userID: localStorage.getItem('id')
       }
       this.props.addMovie(toAdd);
     }
     render() {
-      console.log('slide out props ', this.props)
         let visible = this.state.show ? 'slide-container showThis' : 'slide-container hideThis'
         return (
           <div className={visible}>
