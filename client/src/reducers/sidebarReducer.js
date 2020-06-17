@@ -1,6 +1,11 @@
-import { HANDLE_IMAGE_CLICK, HANDLE_SIDEBAR } from "../actions/types";
+import {
+  HANDLE_IMAGE_CLICK,
+  HANDLE_SIDEBAR,
+  HANDLE_RESET,
+} from "../actions/types";
 const initialState = {
   show: false,
+  info: ''
 };
 
 export default function (state = initialState, action) {
@@ -8,14 +13,20 @@ export default function (state = initialState, action) {
     case HANDLE_IMAGE_CLICK:
       return {
         ...state,
-        show: true,
-        ...action.payload,
+        info: action.payload,
+        show: !state.show,
       };
     case HANDLE_SIDEBAR:
       return {
         ...state,
-        show: false,
+        show: !state.show,
+        info: ''
       };
+    case HANDLE_RESET:
+      return {
+        ...state,
+        show: false
+      }
     default:
       return state;
   }

@@ -4,6 +4,7 @@ import {
   HANDLE_NEXT_PAGE,
   HANDLE_PREVIOUS_PAGE,
   HANDLE_RESET,
+  SEARCH_ERROR,
 } from "../actions/types";
 const initialState = {
     loading: true,
@@ -39,6 +40,11 @@ export default function (state = initialState, action){
             }
         case HANDLE_RESET:
             return initialState;
+        case SEARCH_ERROR:
+            return {
+                ...state,
+                error: action.payload
+            }
         default:
             return state
     }

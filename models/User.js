@@ -3,16 +3,35 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 const { Schema } = mongoose;
 const UserSchema = new Schema({
-    email: {
-        type: String,
+  email: {
+    type: String,
+    unique: true,
+    lowercase: true,
+    trim: true,
+    required: "Please supply an email",
+  },
+  password: {
+    type: String,
+  },
+  // favorites: {
+  //   type: Array,
+  //   unique: true,
+  // },
+  favorites: [
+    {
+      id: {
+        type: Number,
         unique: true,
-        lowercase: true,
-        trim: true,
-        required: 'Please supply an email'
+        dropDups: true,
+      },
+      userID: {
+        type: String,
+      },
+      title: String,
+      overview: String,
+      poster_path: String,
     },
-    password:{
-        type: String
-    }
+  ],
 });
 
 UserSchema.pre("save", function (next) {

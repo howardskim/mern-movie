@@ -33,10 +33,11 @@ const localLogin = new LocalStrategy(localOptions, function(email, password, don
 //configure options for jwt strategy
 const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromHeader("authorization"),
-  secretOrKey: keys.secret
+  secretOrKey: keys.secret,
+  passReqToCallback: true,
 };
 
-const jwtLogin = new JwtStrategy(jwtOptions, function (payload, done) {
+const jwtLogin = new JwtStrategy(jwtOptions, function (req, payload, done) {
   // See if the user ID in the payload exists in our database
   // If it does, call 'done' with that other
   // otherwise, call done without a user object
@@ -44,8 +45,9 @@ const jwtLogin = new JwtStrategy(jwtOptions, function (payload, done) {
     if (err) {
       return done(err, false);
     }
-
     if (user) {
+      console.log('user ', user)
+      req.user = user
       done(null, user);
     } else {
       done(null, false);
@@ -56,3 +58,16 @@ const jwtLogin = new JwtStrategy(jwtOptions, function (payload, done) {
 //tell passport to use this strategy
 passport.use(jwtLogin);
 passport.use(localLogin);
+
+
+passport.serializeUser(function (user, done) {
+  done(null, user.id);
+  // where is this user.id going? Are we supposed to access this anywhere?
+});
+
+// used to deserialize the user
+passport.deserializeUser(function (id, done) {
+  User.findById(id, function (err, user) {
+    done(err, user);
+  });
+});

@@ -6,17 +6,20 @@ import * as actions from '../actions/index';
 
 class SignUp extends Component {
     onSubmit = (formProps) => {
-        this.props.signup(formProps)
+        this.props.signup(formProps, () => {
+            this.props.history.push('/favorites')
+        })
     }
     componentDidMount(){
-        this.props.handleSidebar();
+      //handles sidebar closing
+        this.props.handleReset();
     }
     render() {
         const { handleSubmit } = this.props;
         return (
           <form onSubmit={handleSubmit(this.onSubmit)} className="sign-up-form">
             <fieldset>
-              <label>Email</label>
+              <label>Email: </label>
               <Field 
                 name="email"
                 type="text"
@@ -25,7 +28,7 @@ class SignUp extends Component {
               />
             </fieldset>
             <fieldset>
-              <label>Password</label>
+              <label>Password: </label>
               <Field 
                 name="password"
                 type="password"
@@ -36,7 +39,7 @@ class SignUp extends Component {
             <div className="white">
                 {this.props.errorMessage}
             </div>
-            <button className="btn" type="submit">Submit</button>
+            <button className="btn btn-primary" type="submit">Sign Up</button>
           </form>
         );
     }
