@@ -17,8 +17,8 @@ const UserSchema = new Schema({
     {
       id: {
         type: Number,
-        unique: true,
-        dropDups: true,
+        // unique: true,
+        // dropDups: true,
       },
       userID: {
         type: String,

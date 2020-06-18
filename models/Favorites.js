@@ -5,8 +5,6 @@ const { Schema } = mongoose;
 const FavoriteSchema = new Schema({
   id: {
     type: Number,
-    unique: true,
-    dropDups: true,
   },
   userID: {
     type: String,
