@@ -13,10 +13,6 @@ const UserSchema = new Schema({
   password: {
     type: String,
   },
-  // favorites: {
-  //   type: Array,
-  //   unique: true,
-  // },
   favorites: [
     {
       id: {

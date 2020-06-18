@@ -20,7 +20,7 @@ serif; */
 input{
   color: black !important;
 }
-a, .white{
+.white{
   color: white !important;
   
 }
@@ -33,8 +33,12 @@ body{
   height: 100%;
   /* background: rgba(184, 111, 111, 0.062); */
   background: #ddd;
-  background: linear-gradient(to bottom, rgb(7, 7, 7), #5e0202);
   background: black;
+  background: linear-gradient(to bottom, rgb(7, 7, 7), #5e0202);
+  background: linear-gradient(to bottom, rgb(16, 108, 121), #070707);
+  margin: 0;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   /* background: white; */
 }
 .entire-container{
@@ -176,6 +180,9 @@ body{
   .slide-container.hideThis {
    width: 50%;
   }
+  .fav-card-container{
+    width: 100% !important;
+  }
 }
 @media only screen and (min-width: 768px){
   .slide-container.showThis{
@@ -225,4 +232,23 @@ body{
 }
 .sign-up-form input, .sign-up-form label{
   color: white;
+}
+
+/* Card */
+.fav-card-container{
+  width: 15%;
+  height: fit-content;
+}
+.fav-card-container .card-body{
+  font-size: 13px;
+  height: 30vh;
+  overflow: auto;
+}
+.card-container{
+  /* border: 1px solid  white; */
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
 }

@@ -9,6 +9,7 @@ class SlideOut extends Component {
         this.state = {
             show: false,
             title: null,
+            trailer: null,
         }
     }
     closeSidebar = () => {
@@ -19,12 +20,19 @@ class SlideOut extends Component {
     }
     componentDidUpdate(prevProps, prevState){
         if(prevProps.sidebar.show !== this.props.sidebar.show){
-            let { title, original_title, overview } = this.props.sidebar.info;
+            let { title, original_title, overview, results } = this.props.sidebar.info;
+            let trailer = results && results.length ? results.filter((obj) => {
+              let { type } = obj;
+              if(type === 'Trailer'){
+                return true;
+              }
+            }) : '';
             this.setState({
                 show: this.props.sidebar.show,
                 title,
                 // original_title,
-                overview
+                overview,
+                trailer
             })
         }
     }
@@ -33,6 +41,7 @@ class SlideOut extends Component {
         ...this.props.sidebar.info,
         userID: localStorage.getItem('id')
       }
+      console.log('to Add ', toAdd);
       this.props.addMovie(toAdd);
     }
     render() {
@@ -57,18 +66,25 @@ class SlideOut extends Component {
               <Card>
                 <Card.Body>
                   {/* <Card.Title>{this.state.title}</Card.Title> */}
-                  <Card.Text>
-                    {this.state.overview}
-                  </Card.Text>
+                  <Card.Text>{this.state.overview}</Card.Text>
                 </Card.Body>
                 <ListGroup className="list-group-flush">
-                  <ListGroupItem>Cras justo odio</ListGroupItem>
+                  <ListGroupItem>
+                    {this.state.trailer && this.state.trailer[0] ? (
+                      <a
+                        target="_blank"
+                        href={`http://www.youtube.com/watch?v=${this.state.trailer[0].key}`}
+                      >
+                        WATCH TRAILER
+                      </a>
+                    ) : (
+                      ""
+                    )}
+                  </ListGroupItem>
                   <ListGroupItem>Dapibus ac facilisis in</ListGroupItem>
                   <ListGroupItem>Vestibulum at eros</ListGroupItem>
                 </ListGroup>
                 <Card.Body>
-                  <Card.Link href="#">Card Link</Card.Link>
-                  <Card.Link href="#">Another Link</Card.Link>
                   <Button onClick={this.handleClick}>Save to Favorites</Button>
                 </Card.Body>
               </Card>

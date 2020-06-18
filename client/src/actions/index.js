@@ -77,11 +77,17 @@ export const handlePrevious = (searched, previousPageNum) => async (dispatch) =>
 };
 
 
-export const handleImageClick = (info) => {
-  return {
+export const handleImageClick = (info) => async (dispatch) => {
+  const response = await axios.get(`https://api.themoviedb.org/3/movie/${info.id}/videos?api_key=${process.env.REACT_APP_MOVIE_KEY}&language=en-US
+`)
+let withTrailer = {
+  ...info,
+  ...response.data
+}
+  dispatch({
     type: HANDLE_IMAGE_CLICK,
-    payload: info,
-  };
+    payload: withTrailer,
+  });
 };
 
 
@@ -125,7 +131,6 @@ export const signin = ({ email, password }, callback) => async (dispatch) => {
       type: AUTH_USER,
       payload: response.data.token,
       favorites: response.data.favorites,
-      
     });
     localStorage.setItem("token", response.data.token);
     localStorage.setItem("id", response.data.id)
