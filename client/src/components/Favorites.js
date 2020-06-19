@@ -23,6 +23,8 @@ class Favorites extends Component {
                 favorites: this.props.userInfo.favorites
             })
         }
+        // console.log(prevProps);
+        // console.log(this.props);
     }
     render() {
         console.log('this.state.favorites ', this.state.favorites)

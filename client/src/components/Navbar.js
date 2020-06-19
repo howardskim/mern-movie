@@ -65,8 +65,8 @@ class NavbarComponent extends Component {
                 </Link>
               </Navbar.Brand>
               <Navbar.Toggle aria-controls="basic-navbar-nav" />
-              <Navbar.Collapse id="basic-navbar-nav">
-                <Nav className="mr-auto">
+              <Navbar.Collapse id="basic-navbar-nav" style={{justifyContent: 'flex-end'}}>
+                <Nav className="">
                   {this.props.auth ? (
                     
                       <span>
@@ -119,7 +119,6 @@ class NavbarComponent extends Component {
                       Search
                     </Button>
                   </Form>
-                  <p>Hello</p>
                 </Nav>
               </Navbar.Collapse>
             </Navbar>

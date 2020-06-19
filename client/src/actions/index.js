@@ -9,7 +9,9 @@ import {
   AUTH_ERROR,
   SIGN_OUT,
   SEARCH_ERROR,
-  GET_FAVES
+  GET_FAVES,
+  SAVED_MOVIE,
+  DELETE_MOVIE
 } from "./types";
 import axios from 'axios';
 
@@ -126,7 +128,6 @@ export const signin = ({ email, password }, callback) => async (dispatch) => {
       email,
       password,
     });
-    console.log('response ', response)
     dispatch({
       type: AUTH_USER,
       payload: response.data.token,
@@ -146,7 +147,10 @@ export const signin = ({ email, password }, callback) => async (dispatch) => {
 
 export const addMovie = (newMovie) => async (dispatch) => {
   try {
-    const response = await axios.post("http://localhost:5000/api/addMovie", newMovie)
+    const response = await axios.post("http://localhost:5000/api/addMovie", newMovie);
+    dispatch({
+      type: SAVED_MOVIE,
+    });
   } catch (error) {
     console.log(error);
   }
@@ -158,6 +162,20 @@ export const getFavorites = (id) => async (dispatch) => {
     dispatch({
       type: GET_FAVES,
       payload: response.data
+    })
+  } catch (error) {
+    
+  }
+}
+
+export const deleteMovie = (id) => async (dispatch) => {
+  let user = localStorage.getItem('id');
+  try {
+    const response = await axios.delete(`http://localhost:5000/api/deleteMovie/?id=${id}&user=${user}`);
+    console.log(response.data)
+    dispatch({
+      type: DELETE_MOVIE,
+      payload: response.data.id
     })
   } catch (error) {
     

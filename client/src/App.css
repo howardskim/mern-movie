@@ -34,8 +34,10 @@ body{
   /* background: rgba(184, 111, 111, 0.062); */
   background: #ddd;
   background: black;
-  background: linear-gradient(to bottom, rgb(7, 7, 7), #5e0202);
   background: linear-gradient(to bottom, rgb(16, 108, 121), #070707);
+  background: linear-gradient(to bottom, rgba(2, 0, 7, 0.61), #052f47);
+  background: linear-gradient(to bottom, rgb(7, 7, 7), #5e0202);
+
   margin: 0;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -82,12 +84,12 @@ body{
      right: 15% !important;
    }
    nav {
-     line-height: 75px !important;
+     /* line-height: 75px !important; */
    }
 }
 @media only screen and (min-width: 601px){
   nav i {
-    line-height: 75px !important;
+    /* line-height: 75px !important; */
     padding-right: 10px !important;
   }
  
@@ -130,9 +132,11 @@ body{
 }
 .button-container{
   text-align: center;
-
-  /* display: flex;
-  justify-content: space-evenly; */
+  display: flex;
+  justify-content: center
+}
+.button-container > button{
+  margin-right: 1%;
 }
 .button-container a{
   margin: 1.2rem;
@@ -170,7 +174,7 @@ body{
   top: 0;
   right: 0;
   transition: transform 300ms ease-in-out;
-  overflow: scroll;
+  overflow: auto;
   z-index: 90000000000000000000
 }
 @media only screen and (max-width: 600px) {
@@ -216,7 +220,7 @@ body{
 }
 .slide-container.showThis{
   transform: translate3d(1vw, 0, 0);
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .detail-container{
@@ -247,8 +251,43 @@ body{
 .card-container{
   /* border: 1px solid  white; */
   width: 80%;
+  width: 50%;
+  width: 100%;
   margin: 0 auto;
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
+}
+.jumbotron .img-fluid{
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+}
+.jumbotron{
+  background: linear-gradient(to bottom, rgb(7, 7, 7), #5e0202);
+}
+@media only screen and (max-width: 600px) {
+  .jumbotron .img-fluid {
+    width: 100%;
+  }
+
+}
+
+@media only screen and (min-width: 768px) {
+  .jumbotron .img-fluid {
+    width: 100%;
+  }
+}
+
+@media only screen and (min-width: 992px) {
+  .jumbotron .img-fluid {
+    width: 80%;
+  }
+}
+
+@media only screen and (min-width: 1200px) {
+  .card-container {
+    width: 50%
+  }
 }

@@ -30,7 +30,6 @@ exports.signin = (req, res, next) => {
 exports.getFavorites = (req, res, next) => {
     const { id } = req.query;
     User.findById(id).select('favorites').exec((err, data) => {
-        console.log(data.favorites)
         let hash = {};
         for(let elem of data.favorites){
             let { id } = elem;
@@ -43,6 +42,23 @@ exports.getFavorites = (req, res, next) => {
             res.status(200).send(unique);
         }
     })
+}
+
+exports.deleteMovie = (req, res, next) => {
+    console.log('id from query ', req.query)
+    const { id, user } = req.query;
+    User.update(
+    { _id: user },
+    { $pull: { favorites: { id: id } } },
+    { safe: true, multi: true },
+    function (err, obj) {
+        if(err){
+            return res.status(500).json({msg: err})
+        } else {
+            return res.status(200).json({msg: 'successfully deleted', id: Number(id)})
+        }
+    }
+    )
 }
 
 exports.addMovie = (req, res, next) => {
@@ -77,9 +93,8 @@ exports.addMovie = (req, res, next) => {
         if (err) {
             return res.json({ err });
         } else {
-            return res.status(200).json({ data: addedFavorite, doc });
-        }
-        }
+            return res.status(200).json({ data: addedFavorite });
+        }}
     );
     // addedFavorite.save((err) => {
     //     if(err) {

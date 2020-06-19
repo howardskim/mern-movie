@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import { Card, ListGroup, ListGroupItem, Button } from 'react-bootstrap';
+import { withRouter, Link } from 'react-router-dom';
 import axios from 'axios';
 class SlideOut extends Component {
     constructor(props){
@@ -10,6 +11,7 @@ class SlideOut extends Component {
             show: false,
             title: null,
             trailer: null,
+            saved: false
         }
     }
     closeSidebar = () => {
@@ -17,6 +19,9 @@ class SlideOut extends Component {
     }
     componentDidMount(){
 
+    }
+    componentWillUnmount(){
+      this.props.handleReset();
     }
     componentDidUpdate(prevProps, prevState){
         if(prevProps.sidebar.show !== this.props.sidebar.show){
@@ -35,6 +40,11 @@ class SlideOut extends Component {
                 trailer
             })
         }
+        if(prevProps.sidebar.saved !== this.props.sidebar.saved){
+          this.setState({
+            saved: this.props.sidebar.saved
+          })
+        }
     }
     handleClick = () => {
       let toAdd = {
@@ -44,6 +54,8 @@ class SlideOut extends Component {
       this.props.addMovie(toAdd);
     }
     render() {
+      console.log('this.state ', this.state)
+      const { authenticated } = this.props.userInfo;
         let visible = this.state.show ? 'slide-container showThis' : 'slide-container hideThis'
         return (
           <div className={visible}>
@@ -80,11 +92,26 @@ class SlideOut extends Component {
                       ""
                     )}
                   </ListGroupItem>
-                  <ListGroupItem>Dapibus ac facilisis in</ListGroupItem>
-                  <ListGroupItem>Vestibulum at eros</ListGroupItem>
+                  {/* <ListGroupItem>Dapibus ac facilisis in</ListGroupItem>
+                  <ListGroupItem>Vestibulum at eros</ListGroupItem> */}
+                  <ListGroupItem>
+                    <Link to="/favorites">View Bookmarks</Link>
+                  </ListGroupItem>
                 </ListGroup>
                 <Card.Body>
-                  <Button onClick={this.handleClick}>Save to Favorites</Button>
+                  {authenticated ? (
+                    !this.state.saved ? (
+                      <Button onClick={this.handleClick}>
+                        Click to Bookmark
+                      </Button>
+                    ) : (
+                      <Button>Bookmarked!</Button>
+                    )
+                  ) : (
+                    <Button onClick={() => this.props.history.push("/login")}>
+                      SIGN IN TO BOOKMARK
+                    </Button>
+                  )}
                 </Card.Body>
               </Card>
             </div>
@@ -98,4 +125,4 @@ function mapStateToProps(state){
         userInfo: state.auth
     }
 }
-export default connect(mapStateToProps, actions)(SlideOut);
+export default connect(mapStateToProps, actions)(withRouter(SlideOut));
