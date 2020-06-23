@@ -198,6 +198,9 @@ body{
 .navbar-nav .form-inline input{
   margin-bottom: 2%;
 }
+.navbar-nav button, navbar-nav input{
+  width: 100%;
+}
 @media only screen and (max-width: 600px) {
  .slide-container.showThis {
    width: 50%;
@@ -227,7 +230,10 @@ body{
     width: 30%;
   }
   .navbar-nav .form-inline{
-    flex-flow: wrap;
+    flex-flow: row;
+  }
+  .navbar-nav .form-inline input {
+    margin-bottom: 0;
   }
 }
 @media only screen and (min-width: 1200px) {

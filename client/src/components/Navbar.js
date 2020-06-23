@@ -14,9 +14,6 @@ class NavbarComponent extends Component {
       show: false
     }
   }
-  componentDidMount(){
-
-  }
   handleChange = (e) =>{
     let typed = e.target.value;
     this.setState({
@@ -113,7 +110,7 @@ class NavbarComponent extends Component {
                     />
                     <Button
                       onClick={this.handleSearch}
-                      variant="outline-success"
+                      variant="primary"
                     >
                       Search
                     </Button>
