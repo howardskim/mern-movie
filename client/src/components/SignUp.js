@@ -20,7 +20,6 @@ class SignUp extends Component {
       this.props.resetErrorMessage();
     }
     render() {
-      console.log('sign up props ', this.props);
         const { handleSubmit } = this.props;
         return (
           <>

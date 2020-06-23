@@ -192,6 +192,12 @@ body{
   overflow: auto;
   z-index: 90000000000000000000
 }
+.navbar-nav .form-inline {
+  flex-flow: column;
+}
+.navbar-nav .form-inline input{
+  margin-bottom: 2%;
+}
 @media only screen and (max-width: 600px) {
  .slide-container.showThis {
    width: 50%;
@@ -212,13 +218,16 @@ body{
 
   }
 }
+/* if bigger than 992px */
 @media only screen and (min-width: 992px) {
   .slide-container.showThis {
     width: 30%;
   }
   .slide-container.hideThis {
     width: 30%;
-
+  }
+  .navbar-nav .form-inline{
+    flex-flow: wrap;
   }
 }
 @media only screen and (min-width: 1200px) {

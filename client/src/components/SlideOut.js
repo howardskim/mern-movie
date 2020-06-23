@@ -14,18 +14,15 @@ class SlideOut extends Component {
             saved: false
         }
     }
-    closeSidebar = () => {
-        this.props.closeSidebar()
-    }
     componentDidMount(){
-
+      
     }
     componentWillUnmount(){
       this.props.handleReset();
     }
     componentDidUpdate(prevProps, prevState){
-        if(prevProps.sidebar.show !== this.props.sidebar.show){
-            let { title, original_title, overview, results } = this.props.sidebar.info;
+      if(prevProps.sidebar.show !== this.props.sidebar.show){
+        let { title, original_title, overview, results } = this.props.sidebar.info;
             let trailer = results && results.length ? results.filter((obj) => {
               let { type } = obj;
               if(type === 'Trailer'){
@@ -33,21 +30,24 @@ class SlideOut extends Component {
               }
             }) : '';
             this.setState({
-                show: this.props.sidebar.show,
-                title,
-                // original_title,
-                overview,
+              show: this.props.sidebar.show,
+              title,
+              overview,
                 trailer
-            })
-        }
-        if(prevProps.sidebar.saved !== this.props.sidebar.saved){
-          this.setState({
-            saved: this.props.sidebar.saved
-          })
-        }
+              })
+            }
+      if(prevProps.sidebar.saved !== this.props.sidebar.saved){
+        this.setState({
+          saved: this.props.sidebar.saved
+        })
+      }
+    }
+
+    closeSidebar = () => {
+        this.props.closeSidebar()
     }
     handleClick = () => {
-      let toAdd = {
+      const toAdd = {
         ...this.props.sidebar.info,
         userID: localStorage.getItem('id')
       }
@@ -75,24 +75,21 @@ class SlideOut extends Component {
               <h1>{this.state.title}</h1>
               <Card>
                 <Card.Body>
-                  {/* <Card.Title>{this.state.title}</Card.Title> */}
                   <Card.Text>{this.state.overview}</Card.Text>
                 </Card.Body>
                 <ListGroup className="list-group-flush">
-                  <ListGroupItem>
-                    {this.state.trailer && this.state.trailer[0] ? (
+                  {this.state.trailer && this.state.trailer[0] ? (
+                    <ListGroupItem>
                       <a
                         target="_blank"
                         href={`http://www.youtube.com/watch?v=${this.state.trailer[0].key}`}
                       >
                         WATCH TRAILER
                       </a>
-                    ) : (
-                      ""
-                    )}
-                  </ListGroupItem>
-                  {/* <ListGroupItem>Dapibus ac facilisis in</ListGroupItem>
-                  <ListGroupItem>Vestibulum at eros</ListGroupItem> */}
+                    </ListGroupItem>
+                  ) : (
+                    ""
+                  )}
                   {authenticated ? (
                     <ListGroupItem>
                       <Link to="/favorites">View Bookmarks</Link>

@@ -21,13 +21,6 @@ class SearchLanding extends Component {
           show: false,
         };
     }
-    // getData = (page) => {
-    //     axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_MOVIE_KEY}&language=en-US&page=${page}`).then((resp) => {
-    //         this.setState({
-    //             data: resp.data.results,
-    //         })
-    //     })
-    // }
     componentDidMount(){
         this.props.handleSearch(this.props.match.params.title)
     }
@@ -77,7 +70,6 @@ class SearchLanding extends Component {
       let disableNextBool = currentPage === totalPages;
       let disablePrevBool = currentPage === 1;
       const opacity = this.state.show ? "entire-container" : "";
-
         return (
           <>
             {this.state.loading ? (
@@ -87,7 +79,7 @@ class SearchLanding extends Component {
               {!this.props.data.results.length && !this.state.loading ? '' : <Header title={`results for: "${this.props.match.params.title}"`} />  }
               {!this.props.data.results.length && !this.state.loading ? <Header title = {`Sorry, no results were found... for "${this.props.match.params.title}"`} /> : <> <div className="landing-container">{this.renderImages()}</div>
               <h5 style={{color: 'white', textAlign: 'center'}}>Page: {this.state.currentPage} / {this.state.totalPages}</h5>
-              <div className="button-container">
+              <div className="button-container mb-3">
                 <Button variant="secondary" disabled={disablePrevBool} onClick={this.handlePrevious}>
                   <i className="material-icons right">arrow_back</i>Previous
                 </Button >

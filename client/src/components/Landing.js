@@ -78,7 +78,7 @@ class Landing extends Component {
                   <h5 style={{ color: "white", textAlign: "center" }}>
                     Page: {this.state.currentPage} / {this.state.totalPages}
                   </h5>
-                  <div className="button-container">
+                  <div className="button-container mb-3">
                     <Button variant="secondary" onClick={this.handlePrevious}>
                       <i className="material-icons right">arrow_back</i>Previous
                     </Button>

@@ -15,9 +15,7 @@ const OverView = styled.div`
   padding: 0.5em;
   font-size: 1.2em;
 `;
-const TextArea = styled.p`
-  font-size: 16px;
-`
+
 export default function CardComponent(props) {
     const { movie } = props;
     const { overview, poster_path, title, backdrop_path } = movie;
@@ -27,17 +25,6 @@ export default function CardComponent(props) {
       dispatch(actions.deleteMovie(id))
     }
     return (
-      // <Card className="fav-card-container">
-      //   <Card.Img
-      //     variant="top"
-      //     src={`https://image.tmdb.org/t/p/w200/${poster_path}`}
-      //   />
-      //   <Card.Body>
-      //     <Card.Title>{title}</Card.Title>
-      //     <Card.Text>{overview}</Card.Text>
-      //     <Button variant="primary">Go somewhere</Button>
-      //   </Card.Body>
-      // </Card>
       <Jumbotron>
         <Header1>{title}</Header1>
         <SmallHeader>Released: {released}</SmallHeader>

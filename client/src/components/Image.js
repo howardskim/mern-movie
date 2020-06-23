@@ -7,7 +7,6 @@ const Image = function(props) {
   const image = props.info.poster_path ? <img src={`https://image.tmdb.org/t/p/w300/${props.info.poster_path}`} /> : <img src={noimage} />
   const handleClick = (info) => {
     props.handleImageClick(info)
-    // props.handleReset();
   }
     return (
       <div onClick={() => handleClick(props.info)} className="image-container">
@@ -15,7 +14,5 @@ const Image = function(props) {
       </div>
     );
 }
-function mapStateToProps(state){
 
-}
 export default connect(null, actions)(Image);

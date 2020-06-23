@@ -13,7 +13,7 @@ class Login extends Component {
     });
   };
   componentDidMount() {
-    //handles sidebar closing
+    //Handles Closing Sidebar Component
     this.props.handleReset();
   }
   componentWillUnmount() {

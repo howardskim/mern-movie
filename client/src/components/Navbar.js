@@ -50,7 +50,6 @@ class NavbarComponent extends Component {
   }
     render() {
       //if sidebar is open, add the class entire-container
-      const opacity = this.state.show ? 'main-header entire-container' : 'main-header'
         return (
           <>
             <Navbar bg="dark" expand="lg">
@@ -122,7 +121,6 @@ class NavbarComponent extends Component {
                 </Nav>
               </Navbar.Collapse>
             </Navbar>
-            {/* <h1 className={opacity}>Popular Movies 🍿</h1> */}
           </>
         );
     }
