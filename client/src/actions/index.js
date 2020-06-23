@@ -11,7 +11,8 @@ import {
   SEARCH_ERROR,
   GET_FAVES,
   SAVED_MOVIE,
-  DELETE_MOVIE
+  DELETE_MOVIE,
+  RESET_ERROR_MSG,
 } from "./types";
 import axios from 'axios';
 
@@ -26,6 +27,12 @@ export const closeSidebar = () => {
     type: HANDLE_SIDEBAR,
   };
 };
+
+export const resetErrorMessage = () => {
+  return {
+    type: RESET_ERROR_MSG,
+  };
+}
 
 export const getInitialMovies = (pageNum) => async (dispatch) => {
     const response = await axios.get(

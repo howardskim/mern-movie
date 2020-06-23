@@ -7,7 +7,7 @@ import {
 const initialState = {
   show: false,
   info: '',
-  saved: false
+  saved: false,
 };
 
 export default function (state = initialState, action) {
@@ -30,7 +30,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         show: false,
-        saved: false
+        saved: false,
       };
     case SAVED_MOVIE:
       return {

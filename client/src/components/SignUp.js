@@ -14,7 +14,11 @@ class SignUp extends Component {
       //handles sidebar closing
         this.props.handleReset();
     }
+    componentWillUnmount(){
+      this.props.resetErrorMessage();
+    }
     render() {
+      console.log('sign up props ', this.props);
         const { handleSubmit } = this.props;
         return (
           <form onSubmit={handleSubmit(this.onSubmit)} className="sign-up-form">

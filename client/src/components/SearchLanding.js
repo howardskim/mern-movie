@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import Image from './Image';
 import Spinner from './Spinner';
+import Header from './Header';
 import axios from 'axios';
 import * as actions from '../actions'
 import { connect } from 'react-redux';
@@ -83,7 +84,8 @@ class SearchLanding extends Component {
               <Spinner />
             ) : (
               <div className={opacity}>
-              {!this.props.data.results.length && !this.state.loading ? <h1 className="white">Sorry, no results were found... for {this.props.match.params.title}</h1> : <> <div className="landing-container">{this.renderImages()}</div>
+              {!this.props.data.results.length && !this.state.loading ? '' : <Header title={`results for: "${this.props.match.params.title}"`} />  }
+              {!this.props.data.results.length && !this.state.loading ? <Header title = {`Sorry, no results were found... for "${this.props.match.params.title}"`} /> : <> <div className="landing-container">{this.renderImages()}</div>
               <h5 style={{color: 'white', textAlign: 'center'}}>Page: {this.state.currentPage} / {this.state.totalPages}</h5>
               <div className="button-container">
                 <Button variant="secondary" disabled={disablePrevBool} onClick={this.handlePrevious}>

@@ -14,10 +14,16 @@ class Login extends Component {
     //handles sidebar closing
     this.props.handleReset();
   }
+  componentWillUnmount() {
+    this.props.resetErrorMessage();
+  }
   render() {
     const { handleSubmit } = this.props;
     return (
-      <form onSubmit={handleSubmit(this.onSubmit)} className="sign-up-form sign-in-form">
+      <form
+        onSubmit={handleSubmit(this.onSubmit)}
+        className="sign-up-form sign-in-form"
+      >
         <fieldset>
           <label>Email: </label>
           <Field

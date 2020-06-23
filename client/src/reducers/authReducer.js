@@ -2,7 +2,8 @@ import {
   AUTH_USER,
   AUTH_ERROR,
   GET_FAVES,
-  DELETE_MOVIE
+  DELETE_MOVIE,
+  RESET_ERROR_MSG,
 } from "../actions/types";
 
 const initialState = {
@@ -17,7 +18,7 @@ export default (state = initialState, action) => {
                 ...state,
                 authenticated: action.payload,
                 favorites: action.favorites,
-                email: action.email
+                errorMessage: ''
             }
         case AUTH_ERROR:
             return {
@@ -29,9 +30,14 @@ export default (state = initialState, action) => {
                 ...state,
                 favorites: action.payload
             }
+        case RESET_ERROR_MSG:
+            return {
+                ...state,
+                errorMessage: ''
+            }
         case DELETE_MOVIE:
-            let copy = [...state.favorites];
-            let remaining = copy.filter(obj => obj.id !== action.payload);
+            const copy = [...state.favorites];
+            const remaining = copy.filter(obj => obj.id !== action.payload);
             return {
                 ...state,
                 favorites: remaining

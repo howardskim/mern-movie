@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import Image from './Image';
 import Spinner from './Spinner';
 import axios from 'axios';
+import Header from './Header';
 import * as actions from '../actions'
 import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
@@ -67,24 +68,27 @@ class Landing extends Component {
       const opacity = this.state.show ? 'entire-container' : '';
         return (
           <>
-          <div className={opacity}>
-            {this.state.loading ? (
-              <Spinner />
-            ) : (
-              <>
-              <div className="landing-container">{this.renderImages()}</div>
-              <h5 style={{color: 'white', textAlign: 'center'}}>Page: {this.state.currentPage} / {this.state.totalPages}</h5>
-              <div className="button-container">
-                <Button variant="secondary" onClick={this.handlePrevious}>
-                  <i className="material-icons right">arrow_back</i>Previous
-                </Button>
-                <Button variant="secondary" onClick={this.handleNext}>
-                  Next<i className="material-icons right">arrow_forward</i>
-                </Button>
-              </div>
-            </>
-            )}
-          </div>
+            <div className={opacity}>
+              {this.state.loading ? (
+                <Spinner />
+              ) : (
+                <>
+                  <Header title="Popular Movies 🍿" />
+                  <div className="landing-container">{this.renderImages()}</div>
+                  <h5 style={{ color: "white", textAlign: "center" }}>
+                    Page: {this.state.currentPage} / {this.state.totalPages}
+                  </h5>
+                  <div className="button-container">
+                    <Button variant="secondary" onClick={this.handlePrevious}>
+                      <i className="material-icons right">arrow_back</i>Previous
+                    </Button>
+                    <Button variant="secondary" onClick={this.handleNext}>
+                      Next<i className="material-icons right">arrow_forward</i>
+                    </Button>
+                  </div>
+                </>
+              )}
+            </div>
           </>
         );
     }

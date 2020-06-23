@@ -12,3 +12,4 @@ export const SEARCH_ERROR= "search_error";
 export const GET_FAVES = "get_faves";
 export const SAVED_MOVIE = "saved_movie";
 export const DELETE_MOVIE = "delete_movie"
+export const RESET_ERROR_MSG = "reset_error_msg";

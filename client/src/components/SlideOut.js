@@ -54,7 +54,6 @@ class SlideOut extends Component {
       this.props.addMovie(toAdd);
     }
     render() {
-      console.log('this.state ', this.state)
       const { authenticated } = this.props.userInfo;
         let visible = this.state.show ? 'slide-container showThis' : 'slide-container hideThis'
         return (
@@ -94,9 +93,11 @@ class SlideOut extends Component {
                   </ListGroupItem>
                   {/* <ListGroupItem>Dapibus ac facilisis in</ListGroupItem>
                   <ListGroupItem>Vestibulum at eros</ListGroupItem> */}
-                  <ListGroupItem>
-                    <Link to="/favorites">View Bookmarks</Link>
-                  </ListGroupItem>
+                  {authenticated ? (
+                    <ListGroupItem>
+                      <Link to="/favorites">View Bookmarks</Link>
+                    </ListGroupItem>
+                  ) : null}
                 </ListGroup>
                 <Card.Body>
                   {authenticated ? (
