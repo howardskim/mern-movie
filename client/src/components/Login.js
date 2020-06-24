@@ -8,9 +8,23 @@ import Header from './Header';
 
 class Login extends Component {
   onSubmit = (formProps) => {
-    this.props.signin(formProps, () => {
-      this.props.history.push("/favorites");
-    });
+    const movie = this.props.history.location.state;
+    if(movie){
+      this.props.signinAndSave(formProps, () => {
+        this.props.history.push("/favorites");
+      }, () => {
+        const userID = localStorage.getItem('id');
+        const toSave = {
+          ...movie,
+          userID
+        };
+        this.props.addMovie(toSave)
+      } );
+    } else {
+      this.props.signin(formProps, () => {
+        this.props.history.push("/favorites");
+      });
+    }
   };
   componentDidMount() {
     //Handles Closing Sidebar Component

@@ -86,12 +86,13 @@ export const handlePrevious = (searched, previousPageNum) => async (dispatch) =>
 
 
 export const handleImageClick = (info) => async (dispatch) => {
-  const response = await axios.get(`https://api.themoviedb.org/3/movie/${info.id}/videos?api_key=${process.env.REACT_APP_MOVIE_KEY}&language=en-US
-`)
-let withTrailer = {
-  ...info,
-  ...response.data
+  const response = await axios.get(`https://api.themoviedb.org/3/movie/${info.id}/videos?api_key=${process.env.REACT_APP_MOVIE_KEY}&language=en-US`);
+  console.log('response.data ', response.data);
+  const withTrailer = {
+    ...info,
+    ...response.data
 }
+console.log('with trailer ', withTrailer);
   dispatch({
     type: HANDLE_IMAGE_CLICK,
     payload: withTrailer,
@@ -120,6 +121,7 @@ export const signup = ({email, password}, callback) => async (dispatch) => {
   }
 }
 
+
 export const signout = () => {
   localStorage.removeItem('token');
   localStorage.removeItem("id");
@@ -141,6 +143,30 @@ export const signin = ({ email, password }, callback) => async (dispatch) => {
     });
     localStorage.setItem("token", response.data.token);
     localStorage.setItem("id", response.data.id)
+    callback();
+  } catch (error) {
+    console.log(error);
+    dispatch({
+      type: AUTH_ERROR,
+      payload: "Invalid Login Credentials",
+    });
+  }
+};
+
+export const signinAndSave = ({ email, password }, callback, movieToSaveFunction) => async (dispatch) => {
+  try {
+    const response = await axios.post("http://localhost:5000/signin", {
+      email,
+      password,
+    });
+    dispatch({
+      type: AUTH_USER,
+      payload: response.data.token,
+      favorites: response.data.favorites,
+    });
+    localStorage.setItem("token", response.data.token);
+    localStorage.setItem("id", response.data.id);
+    movieToSaveFunction()
     callback();
   } catch (error) {
     console.log(error);

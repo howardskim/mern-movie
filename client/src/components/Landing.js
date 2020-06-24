@@ -44,7 +44,7 @@ class Landing extends Component {
         let { data, currentPage, itemsToShow } = this.state;
         return this.props.data.results.map((item, index) => {
             return (
-                <Image info={item}/>
+                <Image key={index} info={item}/>
             )
         })
     }
