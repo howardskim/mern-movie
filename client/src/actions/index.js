@@ -102,7 +102,7 @@ export const handleImageClick = (info) => async (dispatch) => {
 
 export const signup = ({ email, password }, callback) => async (dispatch) => {
   try {
-    const response = await axios.post("api//signup", {
+    const response = await axios.post("/api/signup", {
       email,
       password,
     });
@@ -158,7 +158,7 @@ export const signinAndSave = (
   movieToSaveFunction
 ) => async (dispatch) => {
   try {
-    const response = await axios.post("/signin", {
+    const response = await axios.post("/api/signin", {
       email,
       password,
     });
