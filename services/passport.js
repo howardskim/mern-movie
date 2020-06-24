@@ -35,6 +35,7 @@ const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromHeader("authorization"),
   secretOrKey: keys.secret,
   passReqToCallback: true,
+  proxy: true
 };
 
 const jwtLogin = new JwtStrategy(jwtOptions, function (req, payload, done) {
