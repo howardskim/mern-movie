@@ -10,7 +10,6 @@ const localOptions = {
     usernameField: 'email'
 }
 const localLogin = new LocalStrategy(localOptions, function(email, password, done){
-    console.log('email ', email)
     User.findOne({email}, (err, user) => {
         if(err){
             return done(err)
@@ -47,7 +46,6 @@ const jwtLogin = new JwtStrategy(jwtOptions, function (req, payload, done) {
       return done(err, false);
     }
     if (user) {
-      console.log('user ', user)
       req.user = user
       done(null, user);
     } else {

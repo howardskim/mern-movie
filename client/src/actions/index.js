@@ -87,12 +87,10 @@ export const handlePrevious = (searched, previousPageNum) => async (dispatch) =>
 
 export const handleImageClick = (info) => async (dispatch) => {
   const response = await axios.get(`https://api.themoviedb.org/3/movie/${info.id}/videos?api_key=${process.env.REACT_APP_MOVIE_KEY}&language=en-US`);
-  console.log('response.data ', response.data);
   const withTrailer = {
     ...info,
     ...response.data
 }
-console.log('with trailer ', withTrailer);
   dispatch({
     type: HANDLE_IMAGE_CLICK,
     payload: withTrailer,
@@ -102,7 +100,7 @@ console.log('with trailer ', withTrailer);
 
 export const signup = ({email, password}, callback) => async (dispatch) => {
   try {
-    const response = await axios.post('http://localhost:5000/signup', {
+    const response = await axios.post('/api/signup', {
       email,
       password
     });
@@ -132,7 +130,7 @@ export const signout = () => {
 }
 export const signin = ({ email, password }, callback) => async (dispatch) => {
   try {
-    const response = await axios.post("http://localhost:5000/signin", {
+    const response = await axios.post("/api/signin", {
       email,
       password,
     });
@@ -155,7 +153,7 @@ export const signin = ({ email, password }, callback) => async (dispatch) => {
 
 export const signinAndSave = ({ email, password }, callback, movieToSaveFunction) => async (dispatch) => {
   try {
-    const response = await axios.post("http://localhost:5000/signin", {
+    const response = await axios.post("/api/signin", {
       email,
       password,
     });
@@ -179,7 +177,7 @@ export const signinAndSave = ({ email, password }, callback, movieToSaveFunction
 
 export const addMovie = (newMovie) => async (dispatch) => {
   try {
-    const response = await axios.post("http://localhost:5000/api/addMovie", newMovie);
+    const response = await axios.post("/api/addmovie", newMovie);
     dispatch({
       type: SAVED_MOVIE,
     });
@@ -190,7 +188,7 @@ export const addMovie = (newMovie) => async (dispatch) => {
 
 export const getFavorites = (id) => async (dispatch) => {
   try {
-    const response = await axios.get(`http://localhost:5000/api/getFavorites/id?id=${id}`,);
+    const response = await axios.get(`/api/getfavorites/id?id=${id}`,);
     dispatch({
       type: GET_FAVES,
       payload: response.data
@@ -203,8 +201,7 @@ export const getFavorites = (id) => async (dispatch) => {
 export const deleteMovie = (id) => async (dispatch) => {
   let user = localStorage.getItem('id');
   try {
-    const response = await axios.delete(`http://localhost:5000/api/deleteMovie/?id=${id}&user=${user}`);
-    console.log(response.data)
+    const response = await axios.delete(`/api/deletemovie/?id=${id}&user=${user}`);
     dispatch({
       type: DELETE_MOVIE,
       payload: response.data.id

@@ -27,7 +27,7 @@ exports.signin = (req, res, next) => {
     next();
 }
 
-exports.getFavorites = (req, res, next) => {
+exports.getfavorites = (req, res, next) => {
     const { id } = req.query;
     User.findById(id).select('favorites').exec((err, data) => {
         let hash = {};
@@ -44,8 +44,7 @@ exports.getFavorites = (req, res, next) => {
     })
 }
 
-exports.deleteMovie = (req, res, next) => {
-    console.log('id from query ', req.query)
+exports.deletemovie = (req, res, next) => {
     const { id, user } = req.query;
     User.update(
     { _id: user },
@@ -61,7 +60,7 @@ exports.deleteMovie = (req, res, next) => {
     )
 }
 
-exports.addMovie = (req, res, next) => {
+exports.addmovie = (req, res, next) => {
     const { userID } = req.body;
     const addedMovie = req.body;
     const addedFavorite = new Favorite({

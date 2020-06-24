@@ -10,7 +10,7 @@ const mongoose = require('mongoose');
 const keys = require('./config/keys');
 const app = express();
 const cookieSession = require("cookie-session");
-
+const { createProxyMiddleware } = require("http-proxy-middleware");
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -25,7 +25,13 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use(
+  "/api",
+  createProxyMiddleware({
+    target: "https://young-oasis-73588.herokuapp.com/",
+    changeOrigin: true,
+  })
+);
 mongoose.connect(keys.mongoURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,

@@ -51,11 +51,9 @@ class SlideOut extends Component {
         ...this.props.sidebar.info,
         userID: localStorage.getItem('id')
       }
-      console.log('to Add ', toAdd);
       this.props.addMovie(toAdd);
     }
     render() {
-      // console.log('slide out props ', this.props);
       const { authenticated } = this.props.userInfo;
         let visible = this.state.show ? 'slide-container showThis' : 'slide-container hideThis'
         return (

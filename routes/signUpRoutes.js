@@ -16,9 +16,9 @@ module.exports = (app) => {
     app.get('/', requireAuth, (req, res) => {
         res.json({success: 'authorized'})
     })
-    app.post('/signup', AuthenticationController.signup);
-    app.post('/signin', requireSign, AuthenticationController.signin)
-    app.post("/api/addMovie",  AuthenticationController.addMovie);
-    app.get("/api/getFavorites/:id", AuthenticationController.getFavorites)
-    app.delete("/api/deleteMovie", AuthenticationController.deleteMovie);
+    app.post('/api/signup', AuthenticationController.signup);
+    app.post('/api/signin', requireSign, AuthenticationController.signin)
+    app.post("/api/addmovie",  AuthenticationController.addmovie);
+    app.get("/api/getfavorites/:id", AuthenticationController.getfavorites)
+    app.delete("/api/deletemovie", AuthenticationController.deletemovie);
 }
