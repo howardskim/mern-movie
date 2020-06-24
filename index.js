@@ -25,13 +25,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(
-  "/api",
-  createProxyMiddleware({
-    target: "https://young-oasis-73588.herokuapp.com/",
-    changeOrigin: true,
-  })
-);
+
 mongoose.connect(keys.mongoURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -50,7 +44,6 @@ if(process.env.NODE_ENV === 'production'){
 }
 
 const PORT = process.env.PORT || 5000
-
 app.listen(PORT, () => {
     console.log('running on port 5000')
 })
