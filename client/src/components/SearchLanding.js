@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
 import Image from './Image';
 import Spinner from './Spinner';
+import Header from './Header';
 import axios from 'axios';
 import * as actions from '../actions'
 import { connect } from 'react-redux';
+import { Button } from "react-bootstrap";
+
 
 import '../App.css';
 
@@ -14,16 +17,10 @@ class SearchLanding extends Component {
           loading: true,
           baseURL: "https://image.tmdb.org/t/p/w500",
           currentPage: 1,
-          totalPages: 0
+          totalPages: 0,
+          show: false,
         };
     }
-    // getData = (page) => {
-    //     axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${process.env.REACT_APP_MOVIE_KEY}&language=en-US&page=${page}`).then((resp) => {
-    //         this.setState({
-    //             data: resp.data.results,
-    //         })
-    //     })
-    // }
     componentDidMount(){
         this.props.handleSearch(this.props.match.params.title)
     }
@@ -33,6 +30,11 @@ class SearchLanding extends Component {
             loading: false,
             currentPage: this.props.data.page,
             totalPages: this.props.data.total_pages,
+          });
+        }
+        if (prevProps.sidebar.show !== this.props.sidebar.show) {
+          this.setState({
+            show: this.props.sidebar.show,
           });
         }
     }
@@ -67,25 +69,27 @@ class SearchLanding extends Component {
       let { currentPage, totalPages} = this.state;
       let disableNextBool = currentPage === totalPages;
       let disablePrevBool = currentPage === 1;
+      const opacity = this.state.show ? "entire-container" : "";
         return (
           <>
-            {this.state.loading && this.props.data.results.length ? (
+            {this.state.loading ? (
               <Spinner />
             ) : (
-              <>
-              {!this.props.data.results.length && !this.state.loading ? <h1 className="white">Sorry, no results were found... for {this.props.match.params.title}</h1> : <> <div className="landing-container">{this.renderImages()}</div>
-              <div className="button-container">
-              <h5 style={{color: 'white'}}>Page: {this.state.currentPage} / {this.state.totalPages}</h5>
-                <a disabled={disablePrevBool} onClick={this.handlePrevious} className="btn blue-grey lighten-1">
+              <div className={opacity}>
+              {!this.props.data.results.length && !this.state.loading ? '' : <Header title={`results for: "${this.props.match.params.title}"`} />  }
+              {!this.props.data.results.length && !this.state.loading ? <Header title = {`Sorry, no results were found... for "${this.props.match.params.title}"`} /> : <> <div className="landing-container">{this.renderImages()}</div>
+              <h5 style={{color: 'white', textAlign: 'center'}}>Page: {this.state.currentPage} / {this.state.totalPages}</h5>
+              <div className="button-container mb-3">
+                <Button variant="secondary" disabled={disablePrevBool} onClick={this.handlePrevious}>
                   <i className="material-icons right">arrow_back</i>Previous
-                </a>
-                <a disabled={disableNextBool} onClick={this.handleNext} className="btn blue-grey lighten-1">
+                </Button >
+                <Button variant="secondary" disabled={disableNextBool} onClick={this.handleNext}>
                   Next<i className="material-icons right">arrow_forward</i>
-                </a>
+                </Button>
               </div>
               </>
               }
-              </>
+              </div>
             )}
           </>
         );
@@ -93,7 +97,8 @@ class SearchLanding extends Component {
 }
 function mapStateToProps(state){
     return {
-        data: state.search
-    }
+      data: state.search,
+      sidebar: state.sidebar,
+    };
 }
 export default connect(mapStateToProps, actions)(SearchLanding);

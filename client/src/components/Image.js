@@ -14,7 +14,5 @@ const Image = function(props) {
       </div>
     );
 }
-function mapStateToProps(state){
 
-}
 export default connect(null, actions)(Image);

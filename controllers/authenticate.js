@@ -24,17 +24,41 @@ exports.signin = (req, res, next) => {
         favorites: req.user.favorites,
         id: req.user._id
     });
+    next();
 }
 
 exports.getFavorites = (req, res, next) => {
     const { id } = req.query;
     User.findById(id).select('favorites').exec((err, data) => {
+        let hash = {};
+        for(let elem of data.favorites){
+            let { id } = elem;
+            hash[id] = elem;
+        }
+        let unique = Object.values(hash);
         if(err){
             return res.status(400).json({err})
         } else {
-            res.status(200).send(data.favorites)
+            res.status(200).send(unique);
         }
     })
+}
+
+exports.deleteMovie = (req, res, next) => {
+    console.log('id from query ', req.query)
+    const { id, user } = req.query;
+    User.update(
+    { _id: user },
+    { $pull: { favorites: { id: id } } },
+    { safe: true, multi: true },
+    function (err, obj) {
+        if(err){
+            return res.status(500).json({msg: err})
+        } else {
+            return res.status(200).json({msg: 'successfully deleted', id: Number(id)})
+        }
+    }
+    )
 }
 
 exports.addMovie = (req, res, next) => {
@@ -43,26 +67,55 @@ exports.addMovie = (req, res, next) => {
     const addedFavorite = new Favorite({
         ...addedMovie
     });
-    addedFavorite.save((err) => {
-        if(err) {
-            res.status(400).json({
-                error: 'This is already in your favorites!'
-            })
+    // preventing login again after saving to favorites
+    // User.findById(userID , (err, doc) => {
+    //     if(err){
+    //         res.status(400).json({
+    //             error: 'This is already in your favorites!',
+    //             msg: err
+    //         })
+    //     } else {
+    //         let { favorites } = doc;
+    //         favorites.push(addedMovie);
+    //         let hash = {};
+    //         for(let movie of favorites){
+    //             hash[movie.id] = movie;
+    //         }
+    //         let unique = Object.values(hash);
+    //         doc.favorites = unique;
+    //         console.log(doc)
+    //     }
+    // })
+    User.update(
+        { _id: userID },
+        { $addToSet: { favorites: addedMovie } },
+        function (err, doc) {
+        if (err) {
+            return res.json({ err });
         } else {
-            User.update(
-              { _id: userID },
-              { $addToSet: { favorites: addedFavorite } },
-              function (err, doc) {
-                if (err) {
-                  return res.json({ err });
-                } else {
-                  return res.status(200).json({ data: addedFavorite });
-                }
-              }
-            );
-        }
-    })
-
+            return res.status(200).json({ data: addedFavorite });
+        }}
+    );
+    // addedFavorite.save((err) => {
+    //     if(err) {
+    //         res.status(400).json({
+    //             error: 'This is already in your favorites!',
+    //             msg: err
+    //         })
+    //     } else {
+    //         User.update(
+    //           { _id: userID },
+    //           { $addToSet: { favorites: addedMovie } },
+    //           function (err, doc) {
+    //             if (err) {
+    //               return res.json({ err });
+    //             } else {
+    //               return res.status(200).json({ data: addedFavorite, doc });
+    //             }
+    //           }
+    //         );
+    //     }
+    // })
 }
 
 exports.signup =  (req, res, next) => {

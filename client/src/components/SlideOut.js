@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux';
 import * as actions from '../actions';
 import { Card, ListGroup, ListGroupItem, Button } from 'react-bootstrap';
+import { withRouter, Link } from 'react-router-dom';
 import axios from 'axios';
 class SlideOut extends Component {
     constructor(props){
@@ -9,33 +10,53 @@ class SlideOut extends Component {
         this.state = {
             show: false,
             title: null,
+            trailer: null,
+            saved: false
         }
     }
+    componentDidMount(){
+      
+    }
+    componentWillUnmount(){
+      this.props.handleReset();
+    }
+    componentDidUpdate(prevProps, prevState){
+      if(prevProps.sidebar.show !== this.props.sidebar.show){
+        let { title, original_title, overview, results } = this.props.sidebar.info;
+            let trailer = results && results.length ? results.filter((obj) => {
+              let { type } = obj;
+              if(type === 'Trailer'){
+                return true;
+              }
+            }) : '';
+            this.setState({
+              show: this.props.sidebar.show,
+              title,
+              overview,
+                trailer
+              })
+            }
+      if(prevProps.sidebar.saved !== this.props.sidebar.saved){
+        this.setState({
+          saved: this.props.sidebar.saved
+        })
+      }
+    }
+
     closeSidebar = () => {
         this.props.closeSidebar()
     }
-    componentDidMount(){
-
-    }
-    componentDidUpdate(prevProps, prevState){
-        if(prevProps.sidebar.show !== this.props.sidebar.show){
-            let { title, original_title, overview } = this.props.sidebar.info;
-            this.setState({
-                show: this.props.sidebar.show,
-                title,
-                // original_title,
-                overview
-            })
-        }
-    }
     handleClick = () => {
-      let toAdd = {
+      const toAdd = {
         ...this.props.sidebar.info,
         userID: localStorage.getItem('id')
       }
+      console.log('to Add ', toAdd);
       this.props.addMovie(toAdd);
     }
     render() {
+      // console.log('slide out props ', this.props);
+      const { authenticated } = this.props.userInfo;
         let visible = this.state.show ? 'slide-container showThis' : 'slide-container hideThis'
         return (
           <div className={visible}>
@@ -56,20 +77,41 @@ class SlideOut extends Component {
               <h1>{this.state.title}</h1>
               <Card>
                 <Card.Body>
-                  {/* <Card.Title>{this.state.title}</Card.Title> */}
-                  <Card.Text>
-                    {this.state.overview}
-                  </Card.Text>
+                  <Card.Text>{this.state.overview}</Card.Text>
                 </Card.Body>
                 <ListGroup className="list-group-flush">
-                  <ListGroupItem>Cras justo odio</ListGroupItem>
-                  <ListGroupItem>Dapibus ac facilisis in</ListGroupItem>
-                  <ListGroupItem>Vestibulum at eros</ListGroupItem>
+                  {this.state.trailer && this.state.trailer[0] ? (
+                    <ListGroupItem>
+                      <a
+                        target="_blank"
+                        href={`http://www.youtube.com/watch?v=${this.state.trailer[0].key}`}
+                      >
+                        WATCH TRAILER
+                      </a>
+                    </ListGroupItem>
+                  ) : (
+                    ""
+                  )}
+                  {authenticated ? (
+                    <ListGroupItem>
+                      <Link to="/favorites">View Bookmarks</Link>
+                    </ListGroupItem>
+                  ) : null}
                 </ListGroup>
                 <Card.Body>
-                  <Card.Link href="#">Card Link</Card.Link>
-                  <Card.Link href="#">Another Link</Card.Link>
-                  <Button onClick={this.handleClick}>Save to Favorites</Button>
+                  {authenticated ? (
+                    !this.state.saved ? (
+                      <Button onClick={this.handleClick}>
+                        Click to Bookmark
+                      </Button>
+                    ) : (
+                      <Button>Bookmarked!</Button>
+                    )
+                  ) : (
+                    <Button onClick={() => this.props.history.push("/login", this.props.sidebar.info)}>
+                      SIGN IN TO BOOKMARK
+                    </Button>
+                  )}
                 </Card.Body>
               </Card>
             </div>
@@ -83,4 +125,4 @@ function mapStateToProps(state){
         userInfo: state.auth
     }
 }
-export default connect(mapStateToProps, actions)(SlideOut);
+export default connect(mapStateToProps, actions)(withRouter(SlideOut));

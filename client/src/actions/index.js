@@ -7,9 +7,11 @@ import {
   HANDLE_RESET,
   AUTH_USER,
   AUTH_ERROR,
-  SIGN_OUT,
   SEARCH_ERROR,
-  GET_FAVES
+  GET_FAVES,
+  SAVED_MOVIE,
+  DELETE_MOVIE,
+  RESET_ERROR_MSG,
 } from "./types";
 import axios from 'axios';
 
@@ -24,6 +26,12 @@ export const closeSidebar = () => {
     type: HANDLE_SIDEBAR,
   };
 };
+
+export const resetErrorMessage = () => {
+  return {
+    type: RESET_ERROR_MSG,
+  };
+}
 
 export const getInitialMovies = (pageNum) => async (dispatch) => {
     const response = await axios.get(
@@ -77,11 +85,18 @@ export const handlePrevious = (searched, previousPageNum) => async (dispatch) =>
 };
 
 
-export const handleImageClick = (info) => {
-  return {
+export const handleImageClick = (info) => async (dispatch) => {
+  const response = await axios.get(`https://api.themoviedb.org/3/movie/${info.id}/videos?api_key=${process.env.REACT_APP_MOVIE_KEY}&language=en-US`);
+  console.log('response.data ', response.data);
+  const withTrailer = {
+    ...info,
+    ...response.data
+}
+console.log('with trailer ', withTrailer);
+  dispatch({
     type: HANDLE_IMAGE_CLICK,
-    payload: info,
-  };
+    payload: withTrailer,
+  });
 };
 
 
@@ -106,6 +121,7 @@ export const signup = ({email, password}, callback) => async (dispatch) => {
   }
 }
 
+
 export const signout = () => {
   localStorage.removeItem('token');
   localStorage.removeItem("id");
@@ -120,17 +136,40 @@ export const signin = ({ email, password }, callback) => async (dispatch) => {
       email,
       password,
     });
-    console.log(response)
     dispatch({
       type: AUTH_USER,
       payload: response.data.token,
       favorites: response.data.favorites,
-      
     });
     localStorage.setItem("token", response.data.token);
     localStorage.setItem("id", response.data.id)
     callback();
   } catch (error) {
+    console.log(error);
+    dispatch({
+      type: AUTH_ERROR,
+      payload: "Invalid Login Credentials",
+    });
+  }
+};
+
+export const signinAndSave = ({ email, password }, callback, movieToSaveFunction) => async (dispatch) => {
+  try {
+    const response = await axios.post("http://localhost:5000/signin", {
+      email,
+      password,
+    });
+    dispatch({
+      type: AUTH_USER,
+      payload: response.data.token,
+      favorites: response.data.favorites,
+    });
+    localStorage.setItem("token", response.data.token);
+    localStorage.setItem("id", response.data.id);
+    movieToSaveFunction()
+    callback();
+  } catch (error) {
+    console.log(error);
     dispatch({
       type: AUTH_ERROR,
       payload: "Invalid Login Credentials",
@@ -140,7 +179,10 @@ export const signin = ({ email, password }, callback) => async (dispatch) => {
 
 export const addMovie = (newMovie) => async (dispatch) => {
   try {
-    const response = await axios.post("http://localhost:5000/api/addMovie", newMovie)
+    const response = await axios.post("http://localhost:5000/api/addMovie", newMovie);
+    dispatch({
+      type: SAVED_MOVIE,
+    });
   } catch (error) {
     console.log(error);
   }
@@ -152,6 +194,20 @@ export const getFavorites = (id) => async (dispatch) => {
     dispatch({
       type: GET_FAVES,
       payload: response.data
+    })
+  } catch (error) {
+    
+  }
+}
+
+export const deleteMovie = (id) => async (dispatch) => {
+  let user = localStorage.getItem('id');
+  try {
+    const response = await axios.delete(`http://localhost:5000/api/deleteMovie/?id=${id}&user=${user}`);
+    console.log(response.data)
+    dispatch({
+      type: DELETE_MOVIE,
+      payload: response.data.id
     })
   } catch (error) {
     

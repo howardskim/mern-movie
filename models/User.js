@@ -13,16 +13,10 @@ const UserSchema = new Schema({
   password: {
     type: String,
   },
-  // favorites: {
-  //   type: Array,
-  //   unique: true,
-  // },
   favorites: [
     {
       id: {
         type: Number,
-        unique: true,
-        dropDups: true,
       },
       userID: {
         type: String,
@@ -30,6 +24,8 @@ const UserSchema = new Schema({
       title: String,
       overview: String,
       poster_path: String,
+      backdrop_path: String,
+      release_date: String,
     },
   ],
 });

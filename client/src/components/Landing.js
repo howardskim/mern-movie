@@ -2,9 +2,10 @@ import React, { Component } from 'react'
 import Image from './Image';
 import Spinner from './Spinner';
 import axios from 'axios';
+import Header from './Header';
 import * as actions from '../actions'
 import { connect } from 'react-redux';
-
+import { Button } from 'react-bootstrap';
 import '../App.css';
 
 class Landing extends Component {
@@ -43,7 +44,7 @@ class Landing extends Component {
         let { data, currentPage, itemsToShow } = this.state;
         return this.props.data.results.map((item, index) => {
             return (
-                <Image info={item}/>
+                <Image key={index} info={item}/>
             )
         })
     }
@@ -67,24 +68,27 @@ class Landing extends Component {
       const opacity = this.state.show ? 'entire-container' : '';
         return (
           <>
-          <div className={opacity}>
-            {this.state.loading ? (
-              <Spinner />
-            ) : (
-              <>
-              <div className="landing-container">{this.renderImages()}</div>
-              <div className="button-container">
-              <h5 style={{color: 'white'}}>Page: {this.state.currentPage} / {this.state.totalPages}</h5>
-                <a onClick={this.handlePrevious} className="btn blue-grey lighten-1">
-                  <i className="material-icons right">arrow_back</i>Previous
-                </a>
-                <a onClick={this.handleNext} className="btn blue-grey lighten-1">
-                  Next<i className="material-icons right">arrow_forward</i>
-                </a>
-              </div>
-            </>
-            )}
-          </div>
+            <div className={opacity}>
+              {this.state.loading ? (
+                <Spinner />
+              ) : (
+                <>
+                  <Header title="Popular Movies 🍿" />
+                  <div className="landing-container">{this.renderImages()}</div>
+                  <h5 style={{ color: "white", textAlign: "center" }}>
+                    Page: {this.state.currentPage} / {this.state.totalPages}
+                  </h5>
+                  <div className="button-container mb-3">
+                    <Button variant="secondary" onClick={this.handlePrevious}>
+                      <i className="material-icons right">arrow_back</i>Previous
+                    </Button>
+                    <Button variant="secondary" onClick={this.handleNext}>
+                      Next<i className="material-icons right">arrow_forward</i>
+                    </Button>
+                  </div>
+                </>
+              )}
+            </div>
           </>
         );
     }

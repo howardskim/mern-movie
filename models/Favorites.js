@@ -1,19 +1,19 @@
 const mongoose = require("mongoose");
-const uniqueValidator = require("mongoose-unique-validator");
 
 const { Schema } = mongoose;
 const FavoriteSchema = new Schema({
-  id:{
-      type: Number, 
-      unique: true,
-      dropDups: true
+  id: {
+    type: Number,
   },
-  userID:{
-      type: String
+  userID: {
+    type: String,
   },
   title: String,
   overview: String,
-  poster_path: String
+  poster_path: String,
+  release_date: String,
+  vote_average: Number,
+  backdrop_path: String,
+  release_date: String
 });
-FavoriteSchema.plugin(uniqueValidator);
 module.exports = mongoose.model("favorites", FavoriteSchema);
